@@ -4,11 +4,11 @@ email:       daveyan80@gmail.com
 author:      Dave Yan
 description: "A place for me to write about my work"
 baseurl:     ""
-url:         "http://daveboat.github.io"
+url:         "https://daveboat.github.io"
 date_format: "%b %-d, %Y"
 header_pages:
  - about.md
-# - contact.html
+ - contact.html
 
 # Google services
 google_verification:
