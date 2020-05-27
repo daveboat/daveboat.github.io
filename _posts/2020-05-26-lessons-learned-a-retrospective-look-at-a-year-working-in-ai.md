@@ -6,8 +6,6 @@ summary: In the middle of last year, I was hired as an AI Scientist, to work on 
 categories: blogs
 ---
 
-# Lessons learned: A retrospective look at a year working in AI
-
 In the middle of last year, I was hired as an AI Scientist, to work on problems in deep learning for computer vision. Before starting work as an AI Scientist, I had worked in computer vision for a few years, and before that did my PhD in electrical engineering, with a focus on numerical methods for computational physics problems, but I hadn't worked directly in the AI field before. Now that the first year is coming to a close, I wanted to collect my thoughts and recollections about working as an AI researcher and share them in this blog. I've split this blog into three general categories:
 
 1. Things I learned on the job
