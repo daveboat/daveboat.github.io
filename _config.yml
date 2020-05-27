@@ -10,6 +10,8 @@ header_pages:
  - about.md
  - contact.md
 
+future: true
+
 # Google services
 google_verification:
 # Use either direct GA implementation or set up GTM account
