@@ -5,4 +5,4 @@ permalink: /about/
 tags: about
 ---
 
-About page
+This is my blog! I'm an engineer and applied scientist with a background in various things, but I'm currently working in computer vision.
