@@ -10,7 +10,7 @@ header_pages:
  - about.md
  - contact.md
 
-future: true
+future: false
 
 # Google services
 google_verification:
