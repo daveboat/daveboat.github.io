@@ -1,0 +1,63 @@
+---
+layout: post
+title: My big tech interview experience
+date: 2020-08-14 8:00
+summary: In the past two months (the summer of 2020), I interviewed for engineering positions with both Google and Facebook. Even though I didn't actually get an offer (so take all of this with a grain of salt, ha!), I prepared extensively, so I wanted to share my advice and preparation material. In this blog, I'll describe the interview process, how I prepared, and some thoughts about the experience.
+categories: blogs
+---
+
+# My big tech interview experience
+
+In the past two months (the summer of 2020), I interviewed for engineering positions with both Google and Facebook. Even though I didn't actually get an offer (so take all of this with a grain of salt, ha!), I prepared extensively, so I wanted to share my advice and preparation material. In this blog, I'll describe the interview process, how I prepared, and some thoughts about the experience.
+
+My preparation material can be found in [this github repo](http://github.com/daveboat/interview_prep), and consists of four parts:
+- Coding practice questions
+- General ML questions
+- ML System design notes
+- Behavioural preparation questions (questions only)
+
+## The tech interview in parts
+
+For those who haven't gone through it, the engineering interview process for Google/Facebook (and many other silicon valley tech giants) consists of two stages. The first is one or more technical phone screens. The phone screen is a virtual programming question using a shared document. After passing the phone screen, candidates are moved to a day of 5 to 6 45 minute in-person interviews, though my interviews in the summer of 2020 were all virtual due to COVID-19. The in-person interviews consist of a mix of coding, career/behavioural and system design questions. The interview pipeline, from first contact with a recruiter to feedback from the in-person interview, took me around two months, though others have reported longer and shorter times. I'll go through each of them here in more detail, and how I prepared.
+
+### The coding interview
+
+The coding interview is a 45 minute interview with one or two programming questions in which the candidate writes real code and talks through their thought process with the interviewer. This type of interview is what most people focus on, and is discussed to death online. There's also the infamous [book](http://www.crackingthecodinginterview.com/), which I bought but never read. As someone who wasn't "raised" in computer science or software engineering, I didn't have a great grasp on data structures and algorithms before I started preparing for these interviews. To give you an idea, most of my programming up to that point had been in scientific and applied math contexts, and I never had to deal with things like Dijkstra's or Floyd's algorithms. I was mainly programming in Python at the time, so I chose to do my coding interviews in Python.
+
+To prepare, I did a few medium difficulty [Leetcode](https://leetcode.com) questions every day over the course of about two months. I found that the actual difficulty of the interview questions was on par with a medium-level Leetcode question, so this was a great way to prepare (in fact, most questions being asked in real interviews are probably already on Leetcode). Before doing the interview, you should be familiar enough with data structures like trees, heaps, stacks, queues, directed and undirected graphs, linked lists, and algorithms like bit manipulation methods, tree/graph/linked-list traversals, sorting/partial sorting, and dynamic programming to be able to recognize which algorithm to use and start writing working code immediately. I think that, for someone who had very little formal software training like myself, choosing and completing random medium-diffuculty leetcode problems gave me enough of a crash course to pass a coding interview. As I did more questions, I learned to use more and more algorithms, until eventually I very rarely needed to study new algorithms to do new questions.
+
+Here are a few pointers for someone preparing for a coding interview:
+- During your preparation, make sure you note the time and space complexity of every algorithm you write. Every interviewer asks about algorithmic complexity.
+- I found it helpful to write good comments when doing practice problems, both to practice explaining your thought process, and so that reviewing older practice problems is easier
+- Since you only have 45 minutes, it's important that the path you go down once you start coding is the correct one. For example, if you start writing code using a dynamic programming array, but the "best" solution uses linked lists, then you've set yourself up to fail. For this reason, make sure you understand the question and can sketch out the solution before any code is actually written.
+- As a corollary to the previous point: Make sure you prepare enough so that, as soon as you see a question, you generally have an idea of the data structure and algorithms to use, or at least can narrow the possibilities down.
+- I found that trees (binary trees and general trees) and heaps were the most useful data structures to know for the actual interview questions I encountered. Everything else could be solved using general arrays and non-specific algorithms. I never had to use graphs or linked lists.
+- Be familiar with coding without the aid of an IDE. Often when preparing, I would use the debugger to correct bugs in my code, but because a debugger isn't available in the actual interview, I had to start training myself to work through code by hand.
+- Worry a lot about edge cases. This includes things like passing empty or erroneous inputs to your code, as well as special cases where your algorithm might fail. Once you finish writing your code, you should start considering edge cases.
+
+My coding practice problems can be found in my [interview preparation github repo](https://github.com/daveboat/interview_prep/tree/master/coding_practice). Note that this repo doesn't contain the actual questions I was asked during interviews, though I will say that all of the real interview questions I was asked can be found nearly identically on Leetcode.
+
+### The career/behavioural interview
+
+The career/behavioural interview is a 45 minute interview where the candidate is given a number of non-technical questions, primarily about their past work experience. I found that this was the easiest interview, since I struggle much less with social anxiety than I used to, and I'm pretty good at talking about myself :). The key to success in a behavioural interview is to always have something to talk confidently about, regardless of what the interviewer asks or what the subject is. The only way to be comfortable doing this is to practice answering real questions. If possible, get a friend or family member do mock interviews with you, so you get the experience of actually talking to a real person instead of only typing answers.
+
+I prepared for this interview with two documents. One, where I wrote answers to a list of common questions, and also prepared a grid of answers for each of my past jobs and grad school, and another where I reviewed each past project in detail. The questions, without my answers, can be found in my [interview preparation github repo](https://github.com/daveboat/interview_prep/blob/master/behavioural.md), and my project review document isn't being shared since it contains personal information.
+
+### The system design interview
+
+The system design interview is a 45 minute interview where the candidate is given a real-world business problem and asked to design a system to solve the problem. In my case, since I was applying for machine learning and computer vision engineering roles, I prepared for machine learning and computer vision design questions. I found these interviews to be less formal than the coding interviews, and more of a back and forth discussion with your interviewer. A typical example for a machine learning system design question is to design a newsfeed ranking algorithm for Facebook posts. Since there are so many aspects to an end-to-end design, it's important not to only master the technical aspects but also consider real-world issues like user privacy, biases in algorithms and data, and so forth. 
+
+In order to prepare, I worked on two documents. First, I gathered and answered a slew of machine learning/computer vision conceptual questions, so that I could eliminate any gaps in my general knowledge. Most of these I knew pretty well from my work experience, but it was worth typing everything down to solidify my grasp on them. Second, I worked through a series of general machine learning pipelines, as well as several real-world case studies. I found the case studies especially illuminating, since they discuss engineering problems that are encountered in high-volume enterprise production systems, something that I had no experience in. There is a lot of preparation material available online, but the reward for thoroughly preparing is high: if you go through a few case studies, there's a good chance that your interview questions and preparatory material will have a high degree of overlap. My notes contain many pieces of advice, but I'll list some of the important ones here:
+- The most critical task is to frame the business problem into a technical one as clearly and unambiguously as possible. For machine learning systems, this means precisely specifying what metrics are being optimized, and what training and test samples are, etc.
+- Break the system down into components, and design each component to feed into the next, where applicable. For a machine learning system, some broad components might be Data, Features, Model, Testing, and Deployment.
+- Start simple and iterate if needed. The interviewer doesn't expect completely novel ideas. For machine learning systems, this means starting with simple features and linear models, and adding complexity only in areas that need it.
+- Fully consider tradeoffs (for example, between simple and complex models in terms of accuracy vs. interpretability, or between precision and recall metrics for a classifier) and potential pitfalls (for example, user behaviour feedback loops caused by recommendation systems) during the design process.
+
+My preparatory material can be found [here](https://github.com/daveboat/interview_prep/blob/master/ml_concepts.md) for the machine learning conceptual questions and [here](https://github.com/daveboat/interview_prep/blob/master/ml_system_design.md) for the system design notes.
+
+## Some general thoughts
+
+- About the interview process in general, I found that the candidate experience was good regardless of whether or not an offer is granted. The reason is twofold. First, the recruiters were always very responsive and the whole process was very organized. This is in contrast to most smaller companies, where you can be waiting weeks for an interview request, and almost always get ghosted if you're not selected for the next round. Secondly, tech giants have enough resources and enough employees coming and going that they can hire based more purely on merit, instead of needing very specific experience (it's never fun to read in a job posting that you need 8+ years of duck wrangling experience, with except knowledge of Klingon). You can use whichever programming language you want for the coding interviews, for example. All of this is probably a function of how large the tech giants are: they can afford to hire smart people because they're big enough to find a place for good talent, regardless of background.
+- Additionally, tech giants can afford to have an interview process which sacrifices false negatives in order to have very few false positives (in machine learning parlance, high precision!). Combined with the fact that they are constantly recruiting, the interview pipeline does a very good job of selecting only good candidates.
+- I found that preparing for tech interviews becomes easier the more you do it, since interview culture is fairly homogeneous among big tech companies.
+- I spent the most time preparing for coding, followed by system design. I only spent a day or two on the behavioural questions, since my work history isn't very extensive and most of it is pretty fresh in my memory.
