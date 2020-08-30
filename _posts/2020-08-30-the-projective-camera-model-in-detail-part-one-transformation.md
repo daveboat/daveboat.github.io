@@ -22,7 +22,9 @@ In this blog, we will deal with the first step, and cover the next two in upcomi
 
 Instead of starting with three dimensions, it's instructive to examine *rigid transformations* (also known as Euclidian transformations) in two dimensions, which contains all of the essential features of 3D, but with less complexity. Here, rigid just means that distance is preserved between points under the transformation, or to put it another way, objects don't deform under rigid transformations. Let's start with a few simple examples to get ourselves thinking about how cameras see the world. Imagine a two dimensional world, with a point in its coordinate system written as <img src="https://render.githubusercontent.com/render/math?math=(X_w, Y_w)">. A two dimensional camera resides in this world, with its own reference coordinate system glued to itself, with a point it its coordinate system written as <img src="https://render.githubusercontent.com/render/math?math=(X_c, Y_c)">. In the diagram below, for example, the camera is sitting a few units away from the origin of the world coordinate system. Units will matter later, but let's ignore them for now.
 
-![x translation](/assets/images/x_translation.png)
+<div style="text-align:center">
+<img src="/assets/images/x_translation.png">
+</div>
 
 We want to ask ourselves how a point described in the world coordinate system, for example <img src="https://render.githubusercontent.com/render/math?math=P(X_w = 1, Y_w = 0)">, can be described in the camera coordinate system. In other words, *how does the world look from the perspective of the camera*, or *what does the camera see*? In this case, it's easy: 
 <div style="text-align:center">
@@ -35,7 +37,9 @@ Three things are important to note from this simple example. First, the above eq
 
 Next, let's look at a case where the camera coordinate system is rotated 45 degrees clockwise relative to the world coordinate system:
 
-![2d rotation](/assets/images/2d_rotation.png)
+<div style="text-align:center">
+<img src="/assets/images/2d_rotation.png">
+</div>
 
 Again, we want to ask how the point <img src="https://render.githubusercontent.com/render/math?math=P(X_w = 1, Y_w = 0)"> can be described in the camera coordinate system. In this case, the transformation is 
 
@@ -55,7 +59,9 @@ This is a little more complcated than the translation case, but is effectively t
 
 In two (and three) dimensions, the most general rigid transformation is one which involves composing a rotation and a translation -- the camera can be anywhere in the world, pointing in any direction! For example, the diagram below shows a situation where the camera is both translated and rotated relative to the world axes:
 
-![2d composed](/assets/images/2d_composed.png)
+<div style="text-align:center">
+<img src="/assets/images/2d_composed.png">
+</div>
 
 Before doing any math, let's do some manual measurement. We can see that in camera coordinates, the point can be reached by moving along the X direction three and a half corner-to-corner distances, and along the Y direction half a corner-to-corner distance. Corner-to-corner distance is <img src="https://render.githubusercontent.com/render/math?math=\sqrt{2}">, which puts P at <img src="https://render.githubusercontent.com/render/math?math=(7\sqrt{2}/2, \sqrt{2}/2)"> in camera coordinates (you should try to calculate this yourself from the picture), so this is the result we should expect after applying our transformation.
 
@@ -109,7 +115,9 @@ or
 
 where <img src="https://render.githubusercontent.com/render/math?math=\mathbf R"> is the 3x3 rotation matrix, <img src="https://render.githubusercontent.com/render/math?math=\mathbf t"> is the 3x1 translation vector, and <img src="https://render.githubusercontent.com/render/math?math=\mathbf 0"> is a 1x3 matrix of zeros. Like in the two dimensional case, this transformation matrix maps points in the world coordinate system to the camera coordinate system, as shown in the figure below.
 
-![3d transformation](/assets/images/3d_transformation.png)
+<div style="text-align:center">
+<img src="/assets/images/3d_transformation.png">
+</div>
 
 We haven't worried about any specific locations or orientations for the camera or world coordinates in this blog, except when we made a vague and unuseful statement that the camera axes are glued to the camera somehow. We will leave specifics to the next blog where we define the geometry of the camera. The other question of how to define world coordinates is a practical consideration, and worth some discussion. Do we align the world coordinate system to a corner of the room we're in, for example? In other words, *which transformation are we actually computing*? In general, except in special circumstances where there are, perhaps, multiple objects of interest with known locations, making it sensible to have some fixed world coordinate system, it always best to align the world coordinate system to the object being viewed. This is simply because we usually know more about the structure an object than about the object's position in the wider world. It's easier to define a point on a chair relative to the bottom of the chair, rather than relative to the center of the earth, for instance. When we define the world coordinates this way, the transformation matrix tells us how the object is located and oriented relative to the camera, and vice versa, which, as we will see, is useful information. In the more general case where perhaps there is no specific object being viewed, the transformation matrix tells us how the world is oriented relative to the camera, and vice versa. In either scenario, with everything being relative, the transformation matrix provides us with the **pose** of the camera relative to the world.
 
