@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The projective camera model in detail, part 1: transformation
+title: The projective camera model in detail, part 1&#58; transformation
 date: 2020-08-30 8:00
 summary: Many sources exist which discuss about the projective, or pinhole camera model, which is a fundamental concept in computer vision. However, I find that many of them are too concise, or theoretical, or leave out important details, making it hard to get a complete understanding of how the geometry of image formation works. I'm writing this blog for newcomers to computer vision, with a series of blogs which should build on each other, and will try not to leave out any important theoretical or practical details. This blog post is the first in a series, and covers the first part of the projective camera model: Euclidian transformations.
 categories: blogs
