@@ -83,21 +83,29 @@ or, for a general rotation-followed-by-translation,
 
 One can check that, upon performing the matrix multiplication, one obtains the same equations as before. The way I've written the equation here, only one matrix multiplication could be performed before you can no longer multiply the result by a 2x3 matrix. However, we could similarly augment the camera coordinates and add a <img src="https://render.githubusercontent.com/render/math?math=\left[0\,\,0\,\,1\right]"> row to the bottom row of the transformation matrix to allow us to apply any number of transformations in sequence.
 
+Before continuing, you should be able to convince yourself that any sequence of rigid transformations (that is, any number of rotations or translations) can be composed into a single transformation matrix.
+
 ## Three dimensional transformations
 
 Scaling up from two to three dimensions is fairly straighforward. We simply add a Z dimension to the world and camera coordinates:
 
+<div style="text-align:center">
 <img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;X_c\\&space;Y_c&space;\\&space;Z_c&space;\end{bmatrix}&space;=&space;\begin{bmatrix}&space;r_{11}&space;&&space;r_{12}&space;&&space;r_{13}&space;&&space;t_x\\&space;r_{21}&space;&&space;r_{22}&space;&&space;r_{23}&space;&&space;t_y&space;\\&space;r_{31}&space;&&space;r_{32}&space;&&space;r_{33}&space;&&space;t_z&space;\end{bmatrix}&space;\begin{bmatrix}&space;X_w\\&space;Y_w&space;\\&space;Z_w&space;\\&space;1&space;\end{bmatrix}" title="\begin{bmatrix} X_c\\ Y_c \\ Z_c \end{bmatrix} = \begin{bmatrix} r_{11} & r_{12} & r_{13} & t_x\\ r_{21} & r_{22} & r_{23} & t_y \\ r_{31} & r_{32} & r_{33} & t_z \end{bmatrix} \begin{bmatrix} X_w\\ Y_w \\ Z_w \\ 1 \end{bmatrix}" />
+</div>
 
-where I've written the 3 by 3 rotation part of the matrix using <img src="https://render.githubusercontent.com/render/math?math=r_{ij}"> instead of written explicitly as a function of angles. Though there are nine elements in the 3D rotation matrix, due to the constraints on how rotation matrices must operate on points, there are only three degrees of freedom, like there was only one in the two dimensional rotation matrix. There are also multiple ways to compose this rotation matrix from rotations about the X, Y, and Z axes, but I won't try to cover all of this detail here. For interested readers, the [Wikipedia article](https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions) might be a good place to start. In total, there are six degrees of freedom (three rotation, three translation) in the three dimensional transformation matrix. It's also worth noting that, while I've written the transformation matrix as a 3x4 matrix, it's sometimes written as a 4x4 matrix by adding a bottom row with three zeros and a 1.
+where I've written the 3 by 3 rotation part of the matrix using <img src="https://render.githubusercontent.com/render/math?math=r_{ij}"> instead of written explicitly as a function of angles. Though there are nine elements in the 3D rotation matrix, due to the constraints on how rotation matrices must operate on points, there are only three degrees of freedom, like there was only one in the two dimensional rotation matrix. There are also multiple ways to compose this rotation matrix from rotations about the X, Y, and Z axes, but I won't try to cover all of this detail here. For interested readers, the [Wikipedia article](https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions) might be a good place to start. In total, there are six degrees of freedom (three rotation, three translation) in the three dimensional transformation matrix. It's also worth noting that, while I've written the transformation matrix as a 3x4 matrix, it's sometimes written as a 4x4 matrix by adding a bottom row with three zeros and a one.
 
 The 3D transformation matrix is usually referred to as the "camera extrinsic matrix", and sometimes given the symbol <img src="https://render.githubusercontent.com/render/math?math=\mathbf P">. It's also sometimes condensed into
 
+<div style="text-align:center">
 <img src="https://latex.codecogs.com/gif.latex?\large&space;\left[&space;\begin{array}{c|c}&space;\mathbf&space;R&space;&&space;\mathbf&space;t&space;\end{array}&space;\right]" title="\large \left[ \begin{array}{c|c} \mathbf R & \mathbf t \end{array} \right]" />
+</div>
 
 or 
 
+<div style="text-align:center">
 <img src="https://latex.codecogs.com/gif.latex?\large&space;\left[&space;\begin{array}{c|c}&space;\mathbf&space;R&space;&&space;\mathbf&space;t&space;\\&space;\hline&space;\mathbf&space;0&space;&&space;1&space;\end{array}&space;\right]" title="\large \left[ \begin{array}{c|c} \mathbf R & \mathbf t \\ \hline \mathbf 0 & 1 \end{array} \right]" />
+</div>
 
 where <img src="https://render.githubusercontent.com/render/math?math=\mathbf R"> is the 3x3 rotation matrix, <img src="https://render.githubusercontent.com/render/math?math=\mathbf t"> is the 3x1 translation vector, and <img src="https://render.githubusercontent.com/render/math?math=\mathbf 0"> is a 1x3 matrix of zeros. Like in the two dimensional case, this transformation matrix maps points in the world coordinate system to the camera coordinate system, as shown in the figure below.
 
