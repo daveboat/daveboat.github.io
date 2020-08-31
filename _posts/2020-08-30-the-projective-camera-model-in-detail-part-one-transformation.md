@@ -26,7 +26,7 @@ Instead of starting with three dimensions, it's instructive to examine *rigid tr
 <img src="/assets/images/x_translation.png">
 </div>
 
-We want to ask ourselves how a point described in the world coordinate system, for example <img src="https://render.githubusercontent.com/render/math?math=P(X_w = 1, Y_w = 0)">, can be described in the camera coordinate system. In other words, *how does the world look from the perspective of the camera*, or *what does the camera see*? In this case, it's easy whereas the world sees the point one unit to its right, the camera sees the point four units to its right. This transformation can be written mathematically as
+We want to ask ourselves how a point described in the world coordinate system, for example <img src="https://render.githubusercontent.com/render/math?math=P(X_w = 1, Y_w = 0)">, can be described in the camera coordinate system. In other words, *how does the world look from the perspective of the camera*, or *what does the camera see*? In this case, it's easy. The world sees the point one unit to its right, and the camera sees the point four units to its right. This transformation can be written mathematically as
 
 <div style="text-align:center">
 <img src="https://latex.codecogs.com/gif.latex?\large&space;X_c&space;=&space;X_w&space;&plus;&space;3" title="\LARGE X_c = X_w + 3" />
