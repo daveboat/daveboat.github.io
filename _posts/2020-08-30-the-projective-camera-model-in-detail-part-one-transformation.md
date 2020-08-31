@@ -49,7 +49,7 @@ Again, we want to ask how the point <img src="https://render.githubusercontent.c
 <img src="https://latex.codecogs.com/gif.latex?\large&space;Y_c&space;=&space;\frac{1}{\sqrt{2}}&space;X_w&space;&plus;&space;\frac{1}{\sqrt{2}}&space;Y_w" title="\LARGE Y_c = \frac{1}{\sqrt{2}} X_w + \frac{1}{\sqrt{2}} Y_w" />
 </div>
 
-This is a little more complcated than the translation case, but is effectively the same sort of thing -- the camera points are some linear function of the world points. Under this transformation, the point <img src="https://render.githubusercontent.com/render/math?math=(1, 0)"> becomes <img src="https://render.githubusercontent.com/render/math?math=(1/\sqrt{2}, 1/\sqrt{2})">, so the distance from the origin hasn't changed, which we would expect from a pure rotation. Also, as before, this transformation can be viewed two ways, either as rotating the point 45 degrees counterclockwise, or rotating the world axes 45 degrees clockwise. A convenient way of representing rotation is by using the notation of matrix multiplication. In matrix notation, rotation of a point by <img src="https://render.githubusercontent.com/render/math?math=\theta"> is represented as
+This is a little more complcated than the translation case, but is effectively the same sort of thing -- the camera points are some linear function of the world points. Under this transformation, the point <img src="https://render.githubusercontent.com/render/math?math=(1, 0)"> becomes <img src="https://render.githubusercontent.com/render/math?math=(1/\sqrt{2}, 1/\sqrt{2})">, so the distance from the origin hasn't changed. This is what we would expect from a pure rotation. Also, as before, this transformation can be viewed two ways, either as rotating the point 45 degrees counterclockwise, or rotating the world axes 45 degrees clockwise. A convenient way of representing rotation is by using the notation of matrix multiplication. In matrix notation, rotation of a point by <img src="https://render.githubusercontent.com/render/math?math=\theta"> is represented as
 
 <div style="text-align:center">
 <img src="https://latex.codecogs.com/gif.latex?\large&space;\begin{bmatrix}&space;X_c\\&space;Y_c&space;\end{bmatrix}&space;=&space;\begin{bmatrix}&space;\cos&space;\theta&space;&&space;-\sin\theta\\&space;\sin&space;\theta&space;&&space;\cos&space;\theta&space;\end{bmatrix}&space;\begin{bmatrix}&space;X_w\\&space;Y_w&space;\end{bmatrix}" title="\large \begin{bmatrix} X_c\\ Y_c \end{bmatrix} = \begin{bmatrix} \cos \theta & -\sin\theta\\ \sin \theta & \cos \theta \end{bmatrix} \begin{bmatrix} X_w\\ Y_w \end{bmatrix}" />
@@ -127,6 +127,6 @@ It's important to remember that **the values in the transformation matrix change
 
 At this point, we've covered the mathematics necessary to see the three dimensional world from the camera's perspective, by transforming world coordinates into the camera's frame of reference. In the next part, we'll use this description of the world from the camera's point of view to bring that 3D world onto the camera sensor in order to create a two dimensional image. This will be where we look at homogeneous coordinates, pinholes, focal lengths, and all of that fun stuff. Stay tuned!
 
-**Part 1: Transformation** - That's this document!
+**Part 1: Transformation** - You're already here!
 
 **Part 2: Projection** - *Coming soon!*
