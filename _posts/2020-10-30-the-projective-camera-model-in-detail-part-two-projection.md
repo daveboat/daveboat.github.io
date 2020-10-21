@@ -49,9 +49,9 @@ The fundamental question that underlies this model is the following:
 The answer is straightforward, using similar triangles:
 
 <div style="text-align:center">
-<img src="https://latex.codecogs.com/gif.latex?\frac{Y_I}{f}&space;=&space;\frac{Y_C}{Z_C}" title="\frac{Y_I}{f} = \frac{Y_C}{Z_C}" />
+<img src="https://latex.codecogs.com/gif.latex?\LARGE&space;\frac{Y_I}{f}&space;=&space;\frac{Y_C}{Z_C}" title="\LARGE \frac{Y_I}{f} = \frac{Y_C}{Z_C}" />
 <br/>
-<img src="https://latex.codecogs.com/gif.latex?Y_I&space;=&space;f\frac{Y_C}{Z_C}" title="Y_I = f\frac{Y_C}{Z_C}" />
+<img src="https://latex.codecogs.com/gif.latex?\LARGE&space;Y_I&space;=&space;f\frac{Y_C}{Z_C}" title="\LARGE Y_I = f\frac{Y_C}{Z_C}" />
 </div>
 
 At its core, this really is all there is to the pinhole camera model! The fact that the X axis is missing doesn't change the geometry at all, and replacing Y with X in the above equations produces the projection equation for X. So all that happens to a point is that it gets divided by its distance from the camera, and then scaled by <img src="https://render.githubusercontent.com/render/math?math=f">. A perhaps not-so-obvious effect of this projection is that all points along the ray from <img src="https://render.githubusercontent.com/render/math?math=O"> to <img src="https://render.githubusercontent.com/render/math?math=P"> correspond to the same point <img src="https://render.githubusercontent.com/render/math?math=P'">, as shown below:
@@ -74,11 +74,15 @@ We will now take a brief mathematical detour in order to introduce the concept o
 
 Homogeneous coordinates can be considered an extension of Euclidian coordinates. For the two-dimensional Euclidian coordinate 
 
-<img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;x\\&space;y&space;\end{bmatrix}" title="\begin{bmatrix} x\\ y \end{bmatrix}" />
+<div style="text-align:center">
+<img src="https://latex.codecogs.com/gif.latex?\LARGE&space;\begin{bmatrix}&space;x\\&space;y&space;\end{bmatrix}" title="\LARGE \begin{bmatrix} x\\ y \end{bmatrix}" />
+</div>
 
 the corresponding set of homogeneous coordinate are
 
-<img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;zx\\&space;zy\\&space;z&space;\end{bmatrix}" title="\begin{bmatrix} zx\\ zy\\ z \end{bmatrix}" />
+<div style="text-align:center">
+<img src="https://latex.codecogs.com/gif.latex?\LARGE&space;\begin{bmatrix}&space;zx\\&space;zy\\&space;z&space;\end{bmatrix}" title="\LARGE \begin{bmatrix} zx\\ zy\\ z \end{bmatrix}" />
+</div>
 
 where <img src="https://render.githubusercontent.com/render/math?math=z"> is any real number. Thus, each Euclidian coordinate has an infinite number of homogeneous counterparts. For example, <img src="https://render.githubusercontent.com/render/math?math=[1, 3, 1]^T"> and <img src="https://render.githubusercontent.com/render/math?math=[2, 6, 2]^T"> are both valid homogeneous representations of the Euclidian point <img src="https://render.githubusercontent.com/render/math?math=[1, 3]^T">. In order to recover the Euclidian coordinate, for the homogeneous coordinate <img src="https://render.githubusercontent.com/render/math?math=[x, y, w]^T"> one simply normalizes by <img src="https://render.githubusercontent.com/render/math?math=w"> to obtain <img src="https://render.githubusercontent.com/render/math?math=[x/w, y/w]^T">.
 
@@ -88,7 +92,9 @@ Whereas Euclidian coordinates live in Euclidian space, homogeneous coordinates l
 
 Armed with homogeneous coordinates, we can write our previous projection equations in matrix form, as the following:
 
-<img src="https://latex.codecogs.com/gif.latex?\begin{bmatrix}&space;x_I\\&space;y_I\\&space;w&space;\end{bmatrix}&space;=&space;\begin{bmatrix}&space;f&space;&&space;0&space;&&space;0\\&space;0&space;&&space;f&space;&&space;0\\&space;0&space;&&space;0&space;&&space;1&space;\end{bmatrix}&space;\begin{bmatrix}&space;X_c\\&space;Y_c\\&space;Z_c&space;\end{bmatrix}" title="\begin{bmatrix} x_I\\ y_I\\ w \end{bmatrix} = \begin{bmatrix} f & 0 & 0\\ 0 & f & 0\\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} X_c\\ Y_c\\ Z_c \end{bmatrix}" />
+<div style="text-align:center">
+<img src="https://latex.codecogs.com/gif.latex?\LARGE&space;\begin{bmatrix}&space;x_I\\&space;y_I\\&space;w&space;\end{bmatrix}&space;=&space;\begin{bmatrix}&space;f&space;&&space;0&space;&&space;0\\&space;0&space;&&space;f&space;&&space;0\\&space;0&space;&&space;0&space;&&space;1&space;\end{bmatrix}&space;\begin{bmatrix}&space;X_c\\&space;Y_c\\&space;Z_c&space;\end{bmatrix}" title="\LARGE \begin{bmatrix}&space;x_I\\&space;y_I\\&space;w&space;\end{bmatrix}&space;=&space;\begin{bmatrix}&space;f&space;&&space;0&space;&&space;0\\&space;0&space;&&space;f&space;&&space;0\\&space;0&space;&&space;0&space;&&space;1&space;\end{bmatrix}&space;\begin{bmatrix}&space;X_c\\&space;Y_c\\&space;Z_c&space;\end{bmatrix}" />
+</div>
 
 where <img src="https://render.githubusercontent.com/render/math?math=[x_I y_I w]^T"> are the homogeneous coordinates for <img src="https://render.githubusercontent.com/render/math?math=[X_I Y_I]^T">. Notice that, by simple matrix multiplication, followed by normalization by <img src="https://render.githubusercontent.com/render/math?math=w=Z_c">, we arrive at the same equations for the image coordiates as we did before.
 
