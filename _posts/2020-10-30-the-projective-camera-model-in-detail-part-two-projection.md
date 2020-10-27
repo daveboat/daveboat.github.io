@@ -54,7 +54,7 @@ The answer is straightforward, using similar triangles:
 <img src="https://latex.codecogs.com/gif.latex?\LARGE&space;Y_I&space;=&space;f\frac{Y_C}{Z_C}" title="\LARGE Y_I = f\frac{Y_C}{Z_C}" />
 </div>
 
-At its core, this really is all there is to the pinhole camera model! The fact that the X axis is missing doesn't change the geometry at all, and replacing Y with X in the above equations produces the projection equation for X. So all that happens to a point is that it gets divided by its distance from the camera, and then scaled by <img src="https://render.githubusercontent.com/render/math?math=f">. A perhaps not-so-obvious effect of this projection is that all points along the ray from <img src="https://render.githubusercontent.com/render/math?math=O"> to <img src="https://render.githubusercontent.com/render/math?math=P"> correspond to the same point <img src="https://render.githubusercontent.com/render/math?math=P'">, as shown below:
+At its core, this really is all there is to the pinhole camera model! The fact that the X axis is missing doesn't change the geometry at all, and replacing Y with X in the above equations produces the projection equation for X. So all that happens to a point is that it gets divided by its distance from the camera, and then scaled by <img src="https://render.githubusercontent.com/render/math?math=f">. The reader is encouraged to try to visualize the effect that changing the focal length <img src="https://render.githubusercontent.com/render/math?math=f"> has on the projected image. A perhaps not-so-obvious effect of this projection is that all points along the ray from <img src="https://render.githubusercontent.com/render/math?math=O"> to <img src="https://render.githubusercontent.com/render/math?math=P"> correspond to the same point <img src="https://render.githubusercontent.com/render/math?math=P'">, as shown below:
 
 <div style="text-align:center">
 <img src="/assets/images/2d_pinhole_2.png">
@@ -65,8 +65,6 @@ Moving along the <img src="https://render.githubusercontent.com/render/math?math
 <div style="text-align:center">
 <img src="/assets/images/ames_room.jpeg">
 </div>
-
-The reader is encouraged to try to visualize the effect that changing the focal length <img src="https://render.githubusercontent.com/render/math?math=f"> has on the projected image.
 
 ## Homogeneous coordinates
 
