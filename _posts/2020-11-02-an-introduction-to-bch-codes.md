@@ -72,8 +72,8 @@ Here are some randomly selected worked out examples so you can get a feel for mo
 
 <img src="https://latex.codecogs.com/gif.latex?x(x+2) = x^2+2x = x^2+3+2x = (x^2+1)+2x+2 = 2x+2"/> <br/>
 <img src="https://latex.codecogs.com/gif.latex?2x(x+1) = 2x^2+2x = 2x^2+3+2x = 2(x^2+1)+2x+1 = 2x+1"/> <br/>
-<img src="https://latex.codecogs.com/gif.latex?(x+1)(x+2) = x^2+3x+2 = x^2+2 = x^2+1+1 = 1"/> <br/>
-<img src="https://latex.codecogs.com/gif.latex?(2x)(2x) = 4x^2+6 = x^2 = x^2+3 = x^2+1+2 = 2"/> <br/>
+<img src="https://latex.codecogs.com/gif.latex?(x+1)(x+2) = x^2+3x+2 = x^2+2 = (x^2+1)+1 = 1"/> <br/>
+<img src="https://latex.codecogs.com/gif.latex?(2x)(2x) = 4x^2 = 4x^2 + 6 = 4(x^2+1)+2 = 2"/> <br/>
 
 To someone who has done regular arithmetic their whole life, polynomial modular arithmetic can seem strange and unwieldy at first, but you may find it more enjoyable once you get the hang of it! 
 
