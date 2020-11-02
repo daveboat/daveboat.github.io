@@ -301,9 +301,9 @@ Decoding BCH codes has the following steps:
 3. The syndromes are used to compute the error locator polynomial <img src="https://latex.codecogs.com/gif.latex?\Lambda(x)"/>. This can be done using the
 Berlekamp-Massey algorithm or the Peterson–Gorenstein–Zierler (PGZ) algoritm. The error locator polynomial is of the form
 
-<img src="https://latex.codecogs.com/gif.latex?\Lambda(x)=1 + \lambda_1 x + \lambda_2 x^2 + ... + \lambda_t x^t"/>
+    <img src="https://latex.codecogs.com/gif.latex?\Lambda(x)=1 + \lambda_1 x + \lambda_2 x^2 + ... + \lambda_t x^t"/>
 
-where t is the number of bit errors in the codeword.
+    where t is the number of bit errors in the codeword.
 4. The roots of the error locator polynomial give the locations of the errors (as inverses). Since we are
 dealing with binary codewords, the bits at those locations just need to be flipped. The modular polynomial
 factorization is done here with the Chien algorithm.
