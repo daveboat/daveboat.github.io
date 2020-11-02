@@ -253,7 +253,7 @@ A valid <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is found by choos
 - For t=2, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = LCM\{m_1(x), m_2(x), m_3(x), m_4(x)\} = m_1(x)m_3(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 8. This gives a (15, 7, 5) BCH code with two bits of error correcting capability. 
 - For t=3, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = m_1(x)m_3(x)m_5(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 10. This gives a (15, 5, 7) BCH code, and corrects 3 errors. 
 - For t=4, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = m_1(x)m_3(x)m_5(x)m_7(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 14. This gives a (15, 1) repetition code with Hamming distance 15 and corrects 7 errors. 
-- If we add the final <img src="https://latex.codecogs.com/gif.latex?(x+1)"/> factor, then we get <img src="https://latex.codecogs.com/gif.latex?x^15+1=0"/> as the generator polynomial, which maps everything to 0, which is a trivial mapping. 
+- If we add the final <img src="https://latex.codecogs.com/gif.latex?(x+1)"/> factor, then we get <img src="https://latex.codecogs.com/gif.latex?x^{15}+1"/> as the generator polynomial. Since <img src="https://latex.codecogs.com/gif.latex?x^{15}+1=0"/>, this generator polynomial maps everything to 0, which is a trivial mapping. 
 - Also, we could have used just 1 as the generator polynomial, which maps everything to itself (i.e. a (15, 15, 0) code), which is another trivial mapping.
 
 Codes constructed this way are called primitive (i.e. only block lengths of <img src="https://latex.codecogs.com/gif.latex?2^m-1"/> are used) narrow-sense (i.e. we start with <img src="https://latex.codecogs.com/gif.latex?\alpha^1"/> instead of another <img src="https://latex.codecogs.com/gif.latex?\alpha"/>) BCH codes.
@@ -272,8 +272,7 @@ In the second case, we have
 
 so, <img src="https://latex.codecogs.com/gif.latex?i(x)"/> gets shifted to the MSB of <img src="https://latex.codecogs.com/gif.latex?v(x)"/>, and then the leftover bits get modified to make <img src="https://latex.codecogs.com/gif.latex?v(x)"/> divisible by <img src="https://latex.codecogs.com/gif.latex?g(x)"/>.
 
-Non-systematic encoding is trivial to implement. To implement systematic encoding, we shift the message polynomial so that its MSB is at the MSB of the codeword,
-and then modify the zeros at the LSB of the codeword (of length n-k) in a way so that the resulting codeword
+Non-systematic encoding is trivial to implement: just multiply the message by the generator and simplify. To implement systematic encoding, we shift the message polynomial so that its MSB is at the MSB of the codeword, and then modify the zeros at the LSB of the codeword (of length n-k) in a way so that the resulting codeword
 is divisible by <img src="https://latex.codecogs.com/gif.latex?g(x)"/>. Practically this looks like the following:
 
 For a codeword represented by a polynomial <img src="https://latex.codecogs.com/gif.latex?v(x)"/> of degree n, and message represented by a polynomial <img src="https://latex.codecogs.com/gif.latex?i(x)"/> of degree k, the generator polynomial <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is of degree n-k, so:
@@ -286,7 +285,7 @@ For a codeword represented by a polynomial <img src="https://latex.codecogs.com/
 
 So we need to find <img src="https://latex.codecogs.com/gif.latex?i(x)x^{n-k}"/> mod <img src="https://latex.codecogs.com/gif.latex?g(x)"/>, and set those bits in the codeword after shifting the message to th MSB.
 
-Let's do an example of the two encoding types, using the (15, 11, 3) code that we computed previously. This code has <img src="https://latex.codecogs.com/gif.latex?g(x) = x^4+x+1"/>, which is 10011 in binary. Our message can be any 11-length binary number, or 10th degree polynomial. We'll choose 10100010001 as our message, or <img src="https://latex.codecogs.com/gif.latex?i(x)=x^{10} + x^8 + x^4 + 1"/>.
+Let's do an example of encoding a message using non-systematic and systematic encoding, using the (15, 11, 3) code that we computed previously. This code has <img src="https://latex.codecogs.com/gif.latex?g(x) = x^4+x+1"/>. Our message can be any 11-length binary number, or 10th degree polynomial. We'll choose 10100010001 as our message, or <img src="https://latex.codecogs.com/gif.latex?i(x)=x^{10} + x^8 + x^4 + 1"/>.
 
 For non-systematic encoding, we simply multiply <img src="https://latex.codecogs.com/gif.latex?i(x)"/> with <img src="https://latex.codecogs.com/gif.latex?g(x)"/>, to get <img src="https://latex.codecogs.com/gif.latex?x^{14}+x^{12}+x^{11}+x^{10}+x^{9}+x^5+x+1"/>, or 101111000100011 in binary.
 
@@ -308,8 +307,7 @@ where t is the number of bit errors in the codeword.
 4. The roots of the error locator polynomial give the locations of the errors (as inverses). Since we are
 dealing with binary codewords, the bits at those locations just need to be flipped. The modular polynomial
 factorization is done here with the Chien algorithm.
-5. After error correction, the original message can just be read as the k MSB of the codeword, since we used
-systematic encoding.
+5. After error correction, the original message can just be read as the k most significant bits of the codeword if the codeword was encoded systematically, or recovered by dividing by <img src="https://latex.codecogs.com/gif.latex?g(x)"/> if it was encoded non-systematically.
 
 There is an example of decoding in the Wikipedia article [here](https://en.wikipedia.org/wiki/BCH_code#Decoding), and in Section 6.2 of Costello and Lin.
 
