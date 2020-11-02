@@ -6,7 +6,7 @@ summary: An introduction to Bose–Chaudhuri–Hocquenghem (BCH) cyclic error co
 categories: blogs
 ---
 
-I've been working with error correcting codes, and I had a hard time finding good, consolidated sources online which explained the background at a level of detail that I was comfortable with. Things were either very high level, which didn't give enough details to implement a real solution, or overly theoretical, which doesn't appeal to anyone not accustomed to the theorem, proof, lemma, proof style of graduate math textbooks. What I hope to do here is give an explanation of cyclic error correcting codes and BCH codes, aimed at engineers and applied scientists who want to understand an implementation and get a flavor of the theory, without going into proofs. For this reason, I'll just state results without proving them. Instead, I will try to give an outline of how to implement each part of the process. Those interested in more complete picture are encouraged refer to [Costello and Lin](https://books.google.ca/books/about/Error_Control_Coding.html?id=autQAAAAMAAJ&redir_esc=y)
+I've been working with error correcting codes, and I had a hard time finding good, consolidated sources online which explained the background at a level of detail that I was comfortable with. Things were either very high level, which didn't give enough details to implement a real solution, or overly theoretical, which doesn't appeal to anyone not accustomed to the theorem, proof, lemma, proof style of graduate math textbooks. What I hope to do here is give an explanation of cyclic error correcting codes and BCH codes, aimed at engineers and applied scientists who want to understand an implementation and get a flavor of the theory, without going into proofs. For this reason, I'll just state results without proving them. Instead, I will try to give an outline of how to implement each part of the process. Those interested in more complete picture are encouraged refer to [Costello and Lin](https://books.google.ca/books/about/Error_Control_Coding.html?id=autQAAAAMAAJ&redir_esc=y).
 
 This blog will be divided into the following sections:
 1. Background on finite fields
@@ -23,23 +23,23 @@ The mathematics of cyclic error correcting codes is based on finite fields, so i
 
 The addition table is:
 
-|   | 0 | 1 | 2 | 3 | 4 |
+| x  | 0 | 1 | 2 | 3 | 4 |
 |---|---|---|---|---|---|
-| 0 | 0 | 1 | 2 | 3 | 4 |
-| 1 | 1 | 2 | 3 | 4 | 0 |
-| 2 | 2 | 3 | 4 | 0 | 1 |
-| 3 | 3 | 4 | 0 | 1 | 2 |
-| 4 | 4 | 0 | 1 | 2 | 3 |
+| **0** | 0 | 1 | 2 | 3 | 4 |
+| **1** | 1 | 2 | 3 | 4 | 0 |
+| **2** | 2 | 3 | 4 | 0 | 1 |
+| **3** | 3 | 4 | 0 | 1 | 2 |
+| **4** | 4 | 0 | 1 | 2 | 3 |
 
 The multiplication table is:
 
-|   | 0 | 1 | 2 | 3 | 4 |
+| x  | 0 | 1 | 2 | 3 | 4 |
 |---|---|---|---|---|---|
-| 0 | 0 | 0 | 0 | 0 | 0 |
-| 1 | 0 | 1 | 2 | 3 | 4 |
-| 2 | 0 | 2 | 4 | 1 | 3 |
-| 3 | 0 | 3 | 1 | 4 | 2 |
-| 4 | 0 | 4 | 3 | 2 | 1 |
+| **0** | 0 | 0 | 0 | 0 | 0 |
+| **1** | 0 | 1 | 2 | 3 | 4 |
+| **2** | 0 | 2 | 4 | 1 | 3 |
+| **3** | 0 | 3 | 1 | 4 | 2 |
+| **4** | 0 | 4 | 3 | 2 | 1 |
 
 Galois fields must have a number of elements (order) equal to a prime power, and all Galois fields with the same order are isomorphic to each other. To construct a Galois field with non-prime number of elements (i.e. a prime power number of elements), or an **extension field**, we use polynomials instead of integers to represent field elements. To construct <img src="https://latex.codecogs.com/gif.latex?GF(16) = GF(2^4)"/>, we use <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/P"/>. <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]"/> is pronounced "GF(2) adjoin x", and represents the set of all polynomials whose coefficients are in <img src="https://latex.codecogs.com/gif.latex?GF(2)"/>. <img src="https://latex.codecogs.com/gif.latex?P"/>
 is an **irreducible polynomial** of degree 2 over <img src="https://latex.codecogs.com/gif.latex?GF(2)"/>. Irreducible polynomials are polynomials which cannot be factored. For example, in <img src="https://latex.codecogs.com/gif.latex?GF(2)"/>, <img src="https://latex.codecogs.com/gif.latex?x^2+x+1"/> is irreducible, but <img src="https://latex.codecogs.com/gif.latex?x^2+1"/> is not, since <img src="https://latex.codecogs.com/gif.latex?(x+1)(x+1)=x^2+2x+1"/>, but 2=0, so <img src="https://latex.codecogs.com/gif.latex?(x+1)(x+1)=x^2+1"/>. The irreducible polynomials of the first few orders for <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> are:
@@ -52,11 +52,11 @@ is an **irreducible polynomial** of degree 2 over <img src="https://latex.codeco
 | 5     | <img src="https://latex.codecogs.com/gif.latex?x^5+x^2+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^3+x^2+x+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^3+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^4+x^3+x+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^4+x^3+x^2+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^4+x^2+x+1"/> |
 
 There are, in general, multiple irreducible polynomials of each degree for each base field. In practice, we choose the
-one that has the smallest next degree. Since all finite fields of an order are isomorphic, constructing an extension field of a particular order with any valid irreducible polynomial creates an isomorphic finite field (the addition and multiplication tables will just have different entries). Let's do an example of constructing an extension field <img src="https://latex.codecogs.com/gif.latex?GF(9)"/> from the base field <img src="https://latex.codecogs.com/gif.latex?GF(3)"/>. We choose <img src="https://latex.codecogs.com/gif.latex?P = x^2 + 1"/>. <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]/(x^2+1)"/> is then the set of all polynomials with coefficients in <img src="https://latex.codecogs.com/gif.latex?GF(3)"/>, modulo <img src="https://latex.codecogs.com/gif.latex?x^2+1"/>, or the set <img src="https://latex.codecogs.com/gif.latex?\{0, 1, 2, x, x+1, x+2, 2x, 2x+1, 2x+2\}"/>, which has 9 elements. Addition and multiplication using this polynomial representation is modulo <img src="https://latex.codecogs.com/gif.latex?x^2+1"/> and modulo 3. Again, for understanding, let's write out the multiplication table (the addition table is easier to calculate) for <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]/(x^2+1)"/> and work out some specific examples.
+one that has the smallest overall degree (so we prefer to use <img src="https://latex.codecogs.com/gif.latex?x^3+x+1"/> instead of <img src="https://latex.codecogs.com/gif.latex?x^3+x^2+1  "/>, for example). Since all finite fields of an order are isomorphic, constructing an extension field of a particular order with any valid irreducible polynomial creates an isomorphic finite field (the addition and multiplication tables will just have different entries). Let's do an example of constructing an extension field <img src="https://latex.codecogs.com/gif.latex?GF(9)"/> from the base field <img src="https://latex.codecogs.com/gif.latex?GF(3)"/>. We choose <img src="https://latex.codecogs.com/gif.latex?P = x^2 + 1"/>. <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]/(x^2+1)"/> is then the set of all polynomials with coefficients in <img src="https://latex.codecogs.com/gif.latex?GF(3)"/>, modulo <img src="https://latex.codecogs.com/gif.latex?x^2+1"/>, or the set <img src="https://latex.codecogs.com/gif.latex?\{0, 1, 2, x, x+1, x+2, 2x, 2x+1, 2x+2\}"/>, which has 9 elements. Addition and multiplication using this polynomial representation is modulo <img src="https://latex.codecogs.com/gif.latex?x^2+1"/> and modulo 3. Again, for understanding, let's write out the multiplication table (the addition table is easier to calculate) for <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]/(x^2+1)"/> and work out some specific examples.
 
 The multiplication table is:
 
-|      | <img src="https://latex.codecogs.com/gif.latex?0"/> | <img src="https://latex.codecogs.com/gif.latex?1"/>    | <img src="https://latex.codecogs.com/gif.latex?2"/>    | <img src="https://latex.codecogs.com/gif.latex?x"/>    | <img src="https://latex.codecogs.com/gif.latex?x+1"/>  | <img src="https://latex.codecogs.com/gif.latex?x+2"/>  | <img src="https://latex.codecogs.com/gif.latex?2x"/>   | <img src="https://latex.codecogs.com/gif.latex?2x+1"/> | <img src="https://latex.codecogs.com/gif.latex?2x+2"/> |
+|   x   | <img src="https://latex.codecogs.com/gif.latex?0"/> | <img src="https://latex.codecogs.com/gif.latex?1"/>    | <img src="https://latex.codecogs.com/gif.latex?2"/>    | <img src="https://latex.codecogs.com/gif.latex?x"/>    | <img src="https://latex.codecogs.com/gif.latex?x+1"/>  | <img src="https://latex.codecogs.com/gif.latex?x+2"/>  | <img src="https://latex.codecogs.com/gif.latex?2x"/>   | <img src="https://latex.codecogs.com/gif.latex?2x+1"/> | <img src="https://latex.codecogs.com/gif.latex?2x+2"/> |
 |------|---|------|------|------|------|------|------|------|------|
 | <img src="https://latex.codecogs.com/gif.latex?0"/>    | <img src="https://latex.codecogs.com/gif.latex?0"/> | <img src="https://latex.codecogs.com/gif.latex?0"/>    | <img src="https://latex.codecogs.com/gif.latex?0"/>    | <img src="https://latex.codecogs.com/gif.latex?0"/>    | <img src="https://latex.codecogs.com/gif.latex?0"/>    | <img src="https://latex.codecogs.com/gif.latex?0"/>    | <img src="https://latex.codecogs.com/gif.latex?0"/>    | <img src="https://latex.codecogs.com/gif.latex?0"/>    | <img src="https://latex.codecogs.com/gif.latex?0"/>    |
 | <img src="https://latex.codecogs.com/gif.latex?1"/>    | <img src="https://latex.codecogs.com/gif.latex?0"/> | <img src="https://latex.codecogs.com/gif.latex?1"/>    | <img src="https://latex.codecogs.com/gif.latex?2"/>    | <img src="https://latex.codecogs.com/gif.latex?x"/>    | <img src="https://latex.codecogs.com/gif.latex?x+1"/>  | <img src="https://latex.codecogs.com/gif.latex?x+2"/>  | <img src="https://latex.codecogs.com/gif.latex?2x"/>   | <img src="https://latex.codecogs.com/gif.latex?2x+1"/> | <img src="https://latex.codecogs.com/gif.latex?2x+2"/> |
@@ -89,11 +89,11 @@ For example, <img src="https://latex.codecogs.com/gif.latex?\alpha=2"/> is a pri
 <img src="https://latex.codecogs.com/gif.latex?(x+1)^7 = x+2"/><br/>
 <img src="https://latex.codecogs.com/gif.latex?(x+1)^8 = 1"/><br/>
 
-We've been using the base field <img src="https://latex.codecogs.com/gif.latex?GF(3)"/> in this example to give an example with an arbitrary order. In the remainder of this blog though, we'll use <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> as the base field in examples, since ultimately we're interested in binary codes, for which <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> is always the base field.
+We've been using the base field <img src="https://latex.codecogs.com/gif.latex?GF(3)"/> in this section to give an example with an order higher than 2. In the remainder of this blog though, we'll use <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> as the base field in examples, since ultimately we're interested in binary codes, for which <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> is always the base field.
 
 There is a unique polynomial <img src="https://latex.codecogs.com/gif.latex?m(\alpha)"/> over <img src="https://latex.codecogs.com/gif.latex?GF(q)[x]"/> for each element <img src="https://latex.codecogs.com/gif.latex?\alpha"/> in <img src="https://latex.codecogs.com/gif.latex?GF(q^m)"/> which is the smallest polynomial possible, and such that <img src="https://latex.codecogs.com/gif.latex?m(\alpha) = 0"/>, called a **minimal polynomial**. A **primitive polynomial** is the minimal polynomial of a primitive element. As an example, let's construct the finite field <img src="https://latex.codecogs.com/gif.latex?GF(32)"/>, or <img src="https://latex.codecogs.com/gif.latex?GF(2^5)"/>. We use <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^5+x^2+1)"/>. Some examples of
 elements are: 0, 1, <img src="https://latex.codecogs.com/gif.latex?x"/>, <img src="https://latex.codecogs.com/gif.latex?x+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^2"/>, <img src="https://latex.codecogs.com/gif.latex?x^2+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^2+x"/>, etc. For a primitive element <img src="https://latex.codecogs.com/gif.latex?\alpha"/>, we can generate each element of
-<img src="https://latex.codecogs.com/gif.latex?GF(32)"/> by successive multiplication by <img src="https://latex.codecogs.com/gif.latex?\alpha"/>:
+<img src="https://latex.codecogs.com/gif.latex?GF(32)"/> by successive multiplication by <img src="https://latex.codecogs.com/gif.latex?\alpha"/>, as shown below. We use <img src="https://latex.codecogs.com/gif.latex?z"/> instead of <img src="https://latex.codecogs.com/gif.latex?x"/> as the symbol for finite field polynomial terms because we will start reserving <img src="https://latex.codecogs.com/gif.latex?x"/> for minimal polynomials.
 
 <img src="https://latex.codecogs.com/gif.latex?\alpha^1 = z"/><br/>
 <img src="https://latex.codecogs.com/gif.latex?\alpha^2 = z^2"/><br/>
@@ -105,24 +105,23 @@ elements are: 0, 1, <img src="https://latex.codecogs.com/gif.latex?x"/>, <img sr
 <img src="https://latex.codecogs.com/gif.latex?\alpha^8 = z^5+z^3 = z^3+z^2+1"/><br/>
 <img src="https://latex.codecogs.com/gif.latex?\alpha^9 = z^4+z^3+1"/><br/>
 ...and so forth, until<br/>
-<img src="https://latex.codecogs.com/gif.latex?\alpha^31 = 1"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?\alpha^{31} = 1"/><br/>
 
 Each <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> has a minimal polynomial associated with it, and each minimal polynomial has at least one
 <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> as a root. They can be found through the fact that if <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> is a root of a minimal polynomial over the base field <img src="https://latex.codecogs.com/gif.latex?GF(p)"/>, then so is
 <img src="https://latex.codecogs.com/gif.latex?\alpha^{i*p}"/>. So for our example using <img src="https://latex.codecogs.com/gif.latex?GF(32)"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^2"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^4"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^8"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{16}"/> all share the same minimal polynomial, and so do <img src="https://latex.codecogs.com/gif.latex?\alpha^3"/>,
 <img src="https://latex.codecogs.com/gif.latex?\alpha^6"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{12}"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{24}"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{17}"/> (17 = 48 mod 31). To find the minimal polynomial for <img src="https://latex.codecogs.com/gif.latex?\alpha"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^2"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^4"/>,
-<img src="https://latex.codecogs.com/gif.latex?\alpha^8"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{16}"/>, we can calculate <img src="https://latex.codecogs.com/gif.latex?(x-z)(x-z^2)(x-z^4)(x-z^3-z^2-1)(...)"/> and simplify. All the z's should cancel out
-and we should be left with a polynomial in <img src="https://latex.codecogs.com/gif.latex?x"/> only. We'll go over a more explicit example where minimal polynomials are computed in Section 3.
+<img src="https://latex.codecogs.com/gif.latex?\alpha^8"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{16}"/>, we can calculate <img src="https://latex.codecogs.com/gif.latex?(x-z)(x-z^2)(x-z^4)(x-z^3-z^2-1)(...)"/> and simplify. All the <img src="https://latex.codecogs.com/gif.latex?z"/>'s should cancel out and we should be left with a polynomial in <img src="https://latex.codecogs.com/gif.latex?x"/> only. We'll go over a more explicit example where minimal polynomials are computed in Section 3.
 
 # 2. Linear binary cyclic codes
 
-Next, let's talk about linear binary cyclic codes.
+Next, let's discuss linear binary cyclic codes.
 
-Linear: any codeword + another codeword is a valid codeword
+- **Linear**: any codeword + another codeword is a valid codeword
 
-Binary: only 1's and 0's in the codewords
+- **Binary**: only 1's and 0's in the codewords
 
-Cyclic: any cyclic shift of a codeword is another codeword
+- **Cyclic**: any cyclic shift of a codeword is another codeword
 
 For example, all sets of valid 4-length linear binary cyclic codes are:
 
@@ -137,9 +136,8 @@ Furthermore, this means that ANY polynomial in <img src="https://latex.codecogs.
 codeword, since valid codewords are some subset of <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^n-1)"/>, and multiplication by an arbitrary polynomial is a linear combination of cyclic shifts of the original codeword. Since all shifted codewords are valid codewords and all linear combinations
 of codewords are valid codewords, the resulting polynomial must be a valid codeword.
 
-The question, then, is **how do we generate codewords**? I.e. how do we choose a generator polynomial which maps all valid
-messages to all valid codewords? Furthermore, how do we DESIGN the generator polynomial so that we get the block length,
-message length and error correction capability that we want?
+The question then, is **how do we generate codewords**? I.e. how do we choose a generator polynomial which maps all valid
+messages to all valid codewords? Furthermore, how do we DESIGN the generator polynomial so that we get the block length, message length and error correction capability that we want?
 
 For a cyclic code C(n,k)
 - The generator polynomial <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is monic (its highest power has coefficient 1)
@@ -168,9 +166,7 @@ For a received codeword <img src="https://latex.codecogs.com/gif.latex?v(x)"/>,
 
 <img src="https://latex.codecogs.com/gif.latex?v(x) = i(x)g(x) + e(x)"/>
 
-where <img src="https://latex.codecogs.com/gif.latex?i(x)"/> is the true message, and <img src="https://latex.codecogs.com/gif.latex?e(x)"/> is the error.
-
-Since we know which <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> we constructed <img src="https://latex.codecogs.com/gif.latex?g(x)"/> with, <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is 0 at any of those <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>'s. So
+where <img src="https://latex.codecogs.com/gif.latex?i(x)"/> is the true message, and <img src="https://latex.codecogs.com/gif.latex?e(x)"/> is the error. Since we know which <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> we constructed <img src="https://latex.codecogs.com/gif.latex?g(x)"/> with, <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is 0 at any of those <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>'s. So
 
 <img src="https://latex.codecogs.com/gif.latex?v(\alpha^i) = e(\alpha^i)"/>
 
@@ -181,13 +177,13 @@ furthermore,
 # 3. BCH Codes
 
 BCH codes give an easy and useful way of defining <img src="https://latex.codecogs.com/gif.latex?g(x)"/> given a blocklength and a number of error correction bits.
-Recall that, in order to find valid generator polynomials, we are looking for factors of <img src="https://latex.codecogs.com/gif.latex?x^n-1"/>. To link the factorization of <img src="https://latex.codecogs.com/gif.latex?x^n-1"/> with finite fields, we use the fact that the roots of <img src="https://latex.codecogs.com/gif.latex?x^(q-1) - 1"/> are the non-zero elements of <img src="https://latex.codecogs.com/gif.latex?GF(q)"/>!
+Recall that, in order to find valid generator polynomials, we are looking for factors of <img src="https://latex.codecogs.com/gif.latex?x^n-1"/>. To link the factorization of <img src="https://latex.codecogs.com/gif.latex?x^n-1"/> with finite fields, we use the fact that the roots of <img src="https://latex.codecogs.com/gif.latex?x^{q-1} - 1"/> are the non-zero elements of <img src="https://latex.codecogs.com/gif.latex?GF(q)"/>!
 
 In other words, the roots of <img src="https://latex.codecogs.com/gif.latex?x^{q-1}-1"/> form a finite field of order q if 0 is added. So for elements <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> of <img src="https://latex.codecogs.com/gif.latex?GF(q)"/>,
 <img src="https://latex.codecogs.com/gif.latex?x^{q-1}-1 = (x-\alpha^1)(x-\alpha^2)...(x-\alpha^{q-1})"/>
 
 We have already seen that some of the factors of <img src="https://latex.codecogs.com/gif.latex?x^n-1"/> combine to form prime factors, and this is true here as well.
-Each element of <img src="https://latex.codecogs.com/gif.latex?GF(q)"/> is the root of EXACTLY ONE of the prime factors of <img src="https://latex.codecogs.com/gif.latex?x^{q-1}-1"/>. Therefore, <img src="https://latex.codecogs.com/gif.latex?g(x)"/> must be the least common multiple (LCM) of some of the minimal polynomials of <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>. Which ones depends on the code we are trying to create. The key concept of BCH codes is that, **for t bits of desired error correcting capability, the generator polynomial is the lowest degree polynomial with** <img src="https://latex.codecogs.com/gif.latex?\alpha^1, \alpha^2, ..., \alpha^{2t}"/> **as its roots.**
+Each element of <img src="https://latex.codecogs.com/gif.latex?GF(q)"/> is the root of EXACTLY ONE of the prime factors of <img src="https://latex.codecogs.com/gif.latex?x^{q-1}-1"/>. Therefore, <img src="https://latex.codecogs.com/gif.latex?g(x)"/> must be the least common multiple (LCM) of some of the minimal polynomials of <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>. Which ones depends on the code we are trying to create. The key concept of primitive, narrow-sense BCH codes is that, **for t bits of desired error correcting capability, the generator polynomial is the lowest degree polynomial with** <img src="https://latex.codecogs.com/gif.latex?\alpha^1, \alpha^2, ..., \alpha^{2t}"/> **as its roots.**
 
 The steps to construct a BCH code are:
 1. For a given blocklength <img src="https://latex.codecogs.com/gif.latex?n=q-1"/> with <img src="https://latex.codecogs.com/gif.latex?q=2^m"/>, construct a finite field <img src="https://latex.codecogs.com/gif.latex?GF(q)"/>
@@ -196,8 +192,7 @@ The steps to construct a BCH code are:
 desired. The Hamming distance is d = 2t+1
 4. The message length is k = n - (degree(<img src="https://latex.codecogs.com/gif.latex?g(x)"/>) + 1). This creates an (n, k, d) BCH code.
 
-Let's do an example for a code of blocklength 15 = 2^4-1. This requires us to construct the extension field <img src="https://latex.codecogs.com/gif.latex?GF(16)"/>,
-which we can do with the irreducible polynomial <img src="https://latex.codecogs.com/gif.latex?x^4+x+1"/>. So our extension field is <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^4+x+1)"/>. The field elements are:
+Let's do an example for a code of blocklength <img src="https://latex.codecogs.com/gif.latex?15 = 2^4-1"/>. This requires us to construct the extension field <img src="https://latex.codecogs.com/gif.latex?GF(16)"/>, which we can do with the irreducible polynomial <img src="https://latex.codecogs.com/gif.latex?x^4+x+1"/>. So our extension field is <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^4+x+1)"/>. The field elements are:
 
 | element  | polynomial  | binary |
 |----------|-------------|--------|
@@ -224,7 +219,7 @@ The first minimal polynomial <img src="https://latex.codecogs.com/gif.latex?m_1(
 
 <img src="https://latex.codecogs.com/gif.latex?m_1(x) = (x-z)(x-z^2)(x-z-1)(x-z^2-1) = x^4+x+1"/>
 
-similarly, <img src="https://latex.codecogs.com/gif.latex?m_3(x)"/> is associated with <img src="https://latex.codecogs.com/gif.latex?alpha^3, alpha^6, alpha^{12}, alpha^9"/> (24-15=9), so
+similarly, <img src="https://latex.codecogs.com/gif.latex?m_3(x)"/> is associated with <img src="https://latex.codecogs.com/gif.latex?\alpha^3, \alpha^6, \alpha^{12}, \alpha^9"/> (24-15=9), so
 
 <img src="https://latex.codecogs.com/gif.latex?m_3(x) = (x-z^3)(x-z^3-z^2)(x-z^3-z)(x-z^3-z^2-z-1) = x^4+x^3+x^2+x+1"/>
 
@@ -253,16 +248,15 @@ So the minimal polynomials are
 | <img src="https://latex.codecogs.com/gif.latex?\alpha^{13}"/> | <img src="https://latex.codecogs.com/gif.latex?m_7"/>                   |
 | <img src="https://latex.codecogs.com/gif.latex?\alpha^{14}"/> | <img src="https://latex.codecogs.com/gif.latex?m_7"/>                   |
 
-A valid <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is found by choosing t and computing <img src="https://latex.codecogs.com/gif.latex?LCM\{m_1(x), ..., m_{2t}(x)\}"/>. For example, for t=1, we get
-<img src="https://latex.codecogs.com/gif.latex?g(x) = LCM\{m_1(x), m_2(x)\} = m_1(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 4. For block length 15, this gives a (15, 11, 3) BCH code with
-one bit of error correcting capability. For t=2, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = LCM\{m_1(x), m_2(x), m_3(x), m_4(x)\} = m_1(x)m_3(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 8. This gives a
-(15, 7, 5) BCH code with two bits of error correcting capability. For t=3, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = m_1(x)m_3(x)m_5(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 10. This gives a (15, 5, 7) BCH code, and corrects 3
-errors. For t=4, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = m_1(x)m_3(x)m_5(x)m_7(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 14. This gives a (15, 1) repetition code with
-hamming distance 15 and corrects 7 errors. If we add the final <img src="https://latex.codecogs.com/gif.latex?(x+1)"/> factor, then we get <img src="https://latex.codecogs.com/gif.latex?x^15+1=0"/> as the generator polynomial, which maps everything to 0, which
-is a trivial mapping. Also, we could have used just 1 as the generator polynomial, which maps everything to itself
-(i.e. a (15, 15, 0) code), which is also a trivial mapping.
+A valid <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is found by choosing t and computing <img src="https://latex.codecogs.com/gif.latex?LCM\{m_1(x), ..., m_{2t}(x)\}"/>. For example:
+- For t=1, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = LCM\{m_1(x), m_2(x)\} = m_1(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 4. For block length 15, this gives a (15, 11, 3) BCH code with one bit of error correcting capability. 
+- For t=2, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = LCM\{m_1(x), m_2(x), m_3(x), m_4(x)\} = m_1(x)m_3(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 8. This gives a (15, 7, 5) BCH code with two bits of error correcting capability. 
+- For t=3, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = m_1(x)m_3(x)m_5(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 10. This gives a (15, 5, 7) BCH code, and corrects 3 errors. 
+- For t=4, we get <img src="https://latex.codecogs.com/gif.latex?g(x) = m_1(x)m_3(x)m_5(x)m_7(x)"/>, and <img src="https://latex.codecogs.com/gif.latex?g(x)"/> has degree 14. This gives a (15, 1) repetition code with Hamming distance 15 and corrects 7 errors. 
+- If we add the final <img src="https://latex.codecogs.com/gif.latex?(x+1)"/> factor, then we get <img src="https://latex.codecogs.com/gif.latex?x^15+1=0"/> as the generator polynomial, which maps everything to 0, which is a trivial mapping. 
+- Also, we could have used just 1 as the generator polynomial, which maps everything to itself (i.e. a (15, 15, 0) code), which is another trivial mapping.
 
-Codes constructed this way are called primitive (i.e. only block lengths of <img src="https://latex.codecogs.com/gif.latex?2^m-1"/> are used) narrow-sense (i.e. we start with <img src="https://latex.codecogs.com/gif.latex?\alpha^1"/> instead of another alpha) BCH codes.
+Codes constructed this way are called primitive (i.e. only block lengths of <img src="https://latex.codecogs.com/gif.latex?2^m-1"/> are used) narrow-sense (i.e. we start with <img src="https://latex.codecogs.com/gif.latex?\alpha^1"/> instead of another <img src="https://latex.codecogs.com/gif.latex?\alpha"/>) BCH codes.
 
 # 4. Encoding BCH codes
 
@@ -300,6 +294,8 @@ For systematic encoding, we start by multiplying <img src="https://latex.codecog
 
 # 5. A sketch of decoding BCH codes
 
+Decoding is a more complex process worth its own blog. I might go over BCH decoding in detail in a subsequent blog, but I'll only provide a sketch here. 
+
 Decoding BCH codes has the following steps:
 1. Calculate the syndromes by evaluating the received polynomial at <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> for i=1 to 2t
 2. If there are any non-zero syndromes, then there are errors in the received codeword, otherwise go to step 5
@@ -315,5 +311,5 @@ factorization is done here with the Chien algorithm.
 5. After error correction, the original message can just be read as the k MSB of the codeword, since we used
 systematic encoding.
 
-There is an example of decoding here https://en.wikipedia.org/wiki/BCH_code#Decoding, and in Section 6.2 of Costello and Lin.
+There is an example of decoding in the Wikipedia article [here](https://en.wikipedia.org/wiki/BCH_code#Decoding), and in Section 6.2 of Costello and Lin.
 
