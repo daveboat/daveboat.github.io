@@ -298,15 +298,15 @@ Decoding is a more complex process worth its own blog. I might go over BCH decod
 Decoding BCH codes has the following steps:
 1. Calculate the syndromes by evaluating the received polynomial at <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> for i=1 to 2t
 2. If there are any non-zero syndromes, then there are errors in the received codeword, otherwise go to step 5
-3. The syndromes are used to compute the error locator polynomial <img src="https://latex.codecogs.com/gif.latex?\Lambda(x)"/>. This can be done using the
+3. The syndromes are used to compute the error locator polynomial <img src="https://latex.codecogs.com/gif.latex?\Lambda(x)"/>. This can be done using the iterative
 Berlekamp-Massey algorithm or the Peterson–Gorenstein–Zierler (PGZ) algoritm. The error locator polynomial is of the form
 
     <img src="https://latex.codecogs.com/gif.latex?\Lambda(x)=1 + \lambda_1 x + \lambda_2 x^2 + ... + \lambda_t x^t"/>
 
-    where t is the number of bit errors in the codeword.
+    where t is the number of bit errors in the codeword. Computing the error locator polynomial is the most complicated and expensive step.
 4. The roots of the error locator polynomial give the locations of the errors (as inverses). Since we are
 dealing with binary codewords, the bits at those locations just need to be flipped. The modular polynomial
-factorization is done here with the Chien algorithm.
+factorization can be done by brute force by just trying all <img src="https://latex.codecogs.com/gif.latex?\alpha...\alpha^{2t}"/> possibilities via substitution.
 5. After error correction, the original message can just be read as the k most significant bits of the codeword if the codeword was encoded systematically, or recovered by dividing by <img src="https://latex.codecogs.com/gif.latex?g(x)"/> if it was encoded non-systematically.
 
 There is an example of decoding in the Wikipedia article [here](https://en.wikipedia.org/wiki/BCH_code#Decoding), and in Section 6.2 of Costello and Lin.
