@@ -306,7 +306,7 @@ Berlekamp-Massey algorithm or the Peterson–Gorenstein–Zierler (PGZ) algoritm
     where t is the number of bit errors in the codeword. Computing the error locator polynomial is the most complicated and expensive step.
 4. The roots of the error locator polynomial give the locations of the errors (as inverses). Since we are
 dealing with binary codewords, the bits at those locations just need to be flipped. The modular polynomial
-factorization can be done by brute force by just trying all <img src="https://latex.codecogs.com/gif.latex?\alpha...\alpha^{2t}"/> possibilities via substitution.
+factorization can be done by brute force by just trying all <img src="https://latex.codecogs.com/gif.latex?\alpha...\alpha^{n-1}"/> possibilities via substitution.
 5. After error correction, the original message can just be read as the k most significant bits of the codeword if the codeword was encoded systematically, or recovered by dividing by <img src="https://latex.codecogs.com/gif.latex?g(x)"/> if it was encoded non-systematically.
 
 There is an example of decoding in the Wikipedia article [here](https://en.wikipedia.org/wiki/BCH_code#Decoding), and in Section 6.2 of Costello and Lin.
