@@ -15,7 +15,7 @@ This blog will be divided into the following sections:
 4. Encoding BCH codes
 5. A sketch of how to decode BCH codes
 
-# 1. Finite fields
+## Finite fields
 
 The mathematics of cyclic error correcting codes is based on finite fields, so it's impossible to have a meaningful discussion of cyclic codes without first giving the necessary background on finite fields. We'll try to cover the minimum necessary material to understand future sections, with examples along the way to aid understanding. Let's get started!
 
@@ -113,7 +113,7 @@ Each <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> has a minimal po
 <img src="https://latex.codecogs.com/gif.latex?\alpha^6"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{12}"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{24}"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{17}"/> (17 = 48 mod 31). To find the minimal polynomial for <img src="https://latex.codecogs.com/gif.latex?\alpha"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^2"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^4"/>,
 <img src="https://latex.codecogs.com/gif.latex?\alpha^8"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{16}"/>, we can calculate <img src="https://latex.codecogs.com/gif.latex?(x-z)(x-z^2)(x-z^4)(x-z^3-z^2-1)(...)"/> and simplify. All the <img src="https://latex.codecogs.com/gif.latex?z"/>'s should cancel out and we should be left with a polynomial in <img src="https://latex.codecogs.com/gif.latex?x"/> only. We'll go over a more explicit example where minimal polynomials are computed in Section 3.
 
-# 2. Linear binary cyclic codes
+## Linear binary cyclic codes
 
 Next, let's discuss linear binary cyclic codes.
 
@@ -174,7 +174,7 @@ furthermore,
 
 <img src="https://latex.codecogs.com/gif.latex?v(x)"/> mod <img src="https://latex.codecogs.com/gif.latex?g(x)"/> = <img src="https://latex.codecogs.com/gif.latex?e(x)"/> mod <img src="https://latex.codecogs.com/gif.latex?g(x)"/>, since <img src="https://latex.codecogs.com/gif.latex?i(x)g(x)"/> mod <img src="https://latex.codecogs.com/gif.latex?g(x)"/> = 0. These two facts help us locate and correct errors.
 
-# 3. BCH Codes
+## BCH Codes
 
 BCH codes give an easy and useful way of defining <img src="https://latex.codecogs.com/gif.latex?g(x)"/> given a blocklength and a number of error correction bits.
 Recall that, in order to find valid generator polynomials, we are looking for factors of <img src="https://latex.codecogs.com/gif.latex?x^n-1"/>. To link the factorization of <img src="https://latex.codecogs.com/gif.latex?x^n-1"/> with finite fields, we use the fact that the roots of <img src="https://latex.codecogs.com/gif.latex?x^{q-1} - 1"/> are the non-zero elements of <img src="https://latex.codecogs.com/gif.latex?GF(q)"/>!
@@ -258,7 +258,7 @@ A valid <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is found by choos
 
 Codes constructed this way are called primitive (i.e. only block lengths of <img src="https://latex.codecogs.com/gif.latex?2^m-1"/> are used) narrow-sense (i.e. we start with <img src="https://latex.codecogs.com/gif.latex?\alpha^1"/> instead of another <img src="https://latex.codecogs.com/gif.latex?\alpha"/>) BCH codes.
 
-# 4. Encoding BCH codes
+## Encoding BCH codes
 
 BCH codes can be constructed **non-systematically**, by simply multiplying a message polynomial by the generator polynomial,
 or **systematically**, by embedding the message itself in the codeword. The only requirement is that the transmitted
@@ -292,7 +292,7 @@ For non-systematic encoding, we simply multiply <img src="https://latex.codecogs
 
 For systematic encoding, we start by multiplying <img src="https://latex.codecogs.com/gif.latex?i(x)"/> by <img src="https://latex.codecogs.com/gif.latex?x^4"/> to obtain <img src="https://latex.codecogs.com/gif.latex?x^{14} + x^{12}+x^8+x^4"/>. We then use polynomial division mod 2 to find the remainder after dividing by <img src="https://latex.codecogs.com/gif.latex?g(x)"/>, which happens to be zero (I never said I would choose a hard example -- you can check that <img src="https://latex.codecogs.com/gif.latex?g(x)(x^{10}+x^8+x^7+x^6+x^5+x^4)=x^{14} + x^{12}+x^8+x^4"/>). So the systematically encoded codeword is 101000100010000, which indeed contains the original message verbatim in the MSB of the codeword.
 
-# 5. A sketch of decoding BCH codes
+## A sketch of decoding BCH codes
 
 Decoding is a more complex process worth its own blog. I might go over BCH decoding in detail in a subsequent blog, but I'll only provide a sketch here. 
 
