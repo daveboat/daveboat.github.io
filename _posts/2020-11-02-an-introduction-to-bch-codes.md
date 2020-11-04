@@ -420,7 +420,6 @@ to the discrepancies d to the error locator values <img src="https://latex.codec
 an <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> (including 1) or 0.
 
 The Berlekamp procedure is best summarized with a table. Regardless of the problem, the default starting table is
-is:
 
 | <img src="https://latex.codecogs.com/gif.latex?\mu"/> | <img src="https://latex.codecogs.com/gif.latex?S_{\mu}"/> | <img src="https://latex.codecogs.com/gif.latex?\sigma^{(\mu)}"/> | <img src="https://latex.codecogs.com/gif.latex?d_\mu"/> | <img src="https://latex.codecogs.com/gif.latex?l_{\mu}"/> | <img src="https://latex.codecogs.com/gif.latex?\mu-l_{\mu}"/> |
 |-----|---------|----------------|---------|---------|-------------|
