@@ -390,7 +390,7 @@ minimal degree. The process for decoding the error has three steps:
 1. Compute the syndromes <img src="https://latex.codecogs.com/gif.latex?S_i"/> by evaluating <img src="https://latex.codecogs.com/gif.latex?r(x)"/> at <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> for <img src="https://latex.codecogs.com/gif.latex?i \in \{1,2,...,2t\}"/>
 2. Using the syndromes, compute the error locator polynomial <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/>, whose roots are the inverse of the
 locations of the errors
-3. For binary codes, once the error locations are known, those bits just need to be flipped in the code.
+3. For binary codes, once the error locations are known, those bits just need to be flipped in the code. A practical consideration is that bits are indexed from 1 to n instead of 0 to n-1, so an error at <img src="https://latex.codecogs.com/gif.latex?\alpha^1"/> is an error at the least significant bit, and an error at <img src="https://latex.codecogs.com/gif.latex?\alpha^{15}=1"/> is an error at the most significant bit.
 
 In this section, we'll cover one particular algorithm for decoding BCH codes. Berlekamp's algorithm gives an iterative procedure for solving for the <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> with smallest degree that satisfies Newton's identities. The algorithm does this by constructing trial functions <img src="https://latex.codecogs.com/gif.latex?\sigma^{(\mu)}"/> which
 satisfy the first <img src="https://latex.codecogs.com/gif.latex?\mu"/> Newton's identities one by one until <img src="https://latex.codecogs.com/gif.latex?\sigma^{(2t)}"/> is reached, which is minimal degree
@@ -448,9 +448,9 @@ We need to compute syndromes for <img src="https://latex.codecogs.com/gif.latex?
 minimal polynomial for <img src="https://latex.codecogs.com/gif.latex?\alpha^5"/> is <img src="https://latex.codecogs.com/gif.latex?m_5(x)=x^2+x+1"/>. By pen and paper, the easiest way to compute the syndromes is
 to compute the remainder of <img src="https://latex.codecogs.com/gif.latex?r(x)"/> after dividing by <img src="https://latex.codecogs.com/gif.latex?m_i(x)"/>, and evaluating the remainder <img src="https://latex.codecogs.com/gif.latex?b_i(x)"/> at <img src="https://latex.codecogs.com/gif.latex?\alpha_i"/>. Let's  do this for each <img src="https://latex.codecogs.com/gif.latex?b_i(x)m_i(x)"/>:
 
-- <img src="https://latex.codecogs.com/gif.latex?b_1 = (x^12+x^5+x^3) \text{ mod } (x^4+x+1) = 1"/>
-- <img src="https://latex.codecogs.com/gif.latex?b_3 = (x^12+x^5+x^3) \text{ mod } (x^4+x^3+x^2+x+1) = x^3+x^2+1"/>
-- <img src="https://latex.codecogs.com/gif.latex?b_5 = (x^12+x^5+x^3) \text{ mod } (x^2+x+1) = x^2"/>
+- <img src="https://latex.codecogs.com/gif.latex?b_1 = (x^{12}+x^5+x^3) \text{ mod } (x^4+x+1) = 1"/>
+- <img src="https://latex.codecogs.com/gif.latex?b_3 = (x^{12}+x^5+x^3) \text{ mod } (x^4+x^3+x^2+x+1) = x^3+x^2+1"/>
+- <img src="https://latex.codecogs.com/gif.latex?b_5 = (x^{12}+x^5+x^3) \text{ mod } (x^2+x+1) = x^2"/>
 
 So:
 
@@ -459,7 +459,7 @@ So:
 - <img src="https://latex.codecogs.com/gif.latex?S_3 = b_3(\alpha^3) = \alpha^9 + \alpha^6 + 1 = z^3+z + z^3+z^2 + 1 = z^2+z+1 = \alpha^10"/>
 - <img src="https://latex.codecogs.com/gif.latex?S_4 = b_1(\alpha^4) = 1"/>
 - <img src="https://latex.codecogs.com/gif.latex?S_5 = b_5(\alpha^5) = (\alpha^5)^2 = \alpha^{10}"/>
-- <img src="https://latex.codecogs.com/gif.latex?S_6 = b_3(\alpha^6) = \alpha^{18} + \alpha^{12} + 1 = \alpha^{12} + \alpha^3 + 1 = z^3+z^2+z+1+z^3+1 = z^2+z+1 = \alpha^{10}"/>
+- <img src="https://latex.codecogs.com/gif.latex?S_6 = b_3(\alpha^6) = \alpha^{18} + \alpha^{12} + 1 = \alpha^{12} + \alpha^3 + 1 = z^3+z^2+z+1+z^3+1 = z^2+z+1 = \alpha^{5}"/>
 
 We'll write down the final table first, and then dissect the results row by row:
 
@@ -545,10 +545,10 @@ Now all that remains is to find the roots of <img src="https://latex.codecogs.co
 - <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^3) = \alpha^{14} + \alpha^2 + 1 = z^3+1+z^3+1 = 0"/>
 
 Similarly, <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^{10}) = 0"/>, and <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^{12}) = 0"/>, so <img src="https://latex.codecogs.com/gif.latex?\alpha^3"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{10}"/>, and <img src="https://latex.codecogs.com/gif.latex?\alpha^{12}"/> are the roots
-of the error locator polynomial. To the the error locations, we take the inverses of each of these:
+of the error locator polynomial. Note that the Galois field element 1 corresponds to <img src="https://latex.codecogs.com/gif.latex?\alpha^{15}"/>. To the the error locations, we take the inverses of each of these:
 
 - <img src="https://latex.codecogs.com/gif.latex?(\alpha^3)^{-1} = \alpha^{15-3} = \alpha^{12}"/>
 - <img src="https://latex.codecogs.com/gif.latex?(\alpha^{10})^{-1} = \alpha^{15-10} = \alpha^5"/>
 - <img src="https://latex.codecogs.com/gif.latex?(\alpha^{12})^{-1} = \alpha^{15-12} = \alpha^3"/>
 
-So the error locations are at bits 3, 5, and 12, which is where we put the errors in the beginning of the example.
+So the error locations are at bits 3, 5, and 12, which is where we put the errors in the beginning of the example. Again, note that if one of the roots of <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> had been 1, then the inverse would also be 1, which indicates an error on the 15th, or most significant bit, since bits are indexed from 1 to 15 rather than from 0 to 14.
