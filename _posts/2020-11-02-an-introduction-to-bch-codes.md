@@ -495,7 +495,7 @@ the discrepancy is zero, we're free to move onto the next row by setting
 so <img src="https://latex.codecogs.com/gif.latex?\sigma^{(2)} = \sigma^{(1)} = x+1"/>, and <img src="https://latex.codecogs.com/gif.latex?l_2 = 1"/>, and <img src="https://latex.codecogs.com/gif.latex?2-l_2 = 2-1 = 1"/>. Again, we need to compute the
 discrepancy:
 
-<img src="https://latex.codecogs.com/gif.latex?d_2 = S_3 + (1)(S_2) = \alpha^10 + 1 = z^2+z+1+1 = z^2+z = \alpha^5"/>
+<img src="https://latex.codecogs.com/gif.latex?d_2 = S_3 + (1)(S_2) = \alpha^{10} + 1 = z^2+z+1+1 = z^2+z = \alpha^5"/>
 
 Since <img src="https://latex.codecogs.com/gif.latex?d_2"/> is not zero, we need to select the previous column with largest <img src="https://latex.codecogs.com/gif.latex?\rho-l_{\rho}"/>. We have two choices this time 
 where <img src="https://latex.codecogs.com/gif.latex?d_{\rho} \neq 0"/>: <img src="https://latex.codecogs.com/gif.latex?\rho=-1"/> and <img src="https://latex.codecogs.com/gif.latex?\rho=0"/>, of which <img src="https://latex.codecogs.com/gif.latex?\rho=0"/> has the largest <img src="https://latex.codecogs.com/gif.latex?\rho-l_{\rho}"/>. Using this
@@ -507,7 +507,7 @@ row, we are able to compute <img src="https://latex.codecogs.com/gif.latex?\sigm
 
 On this row, <img src="https://latex.codecogs.com/gif.latex?l_3 = 2"/> and <img src="https://latex.codecogs.com/gif.latex?3-l_3 = 3-2 = 1"/>. The discrepancy is
 
-<img src="https://latex.codecogs.com/gif.latex?d_3 = S_4 + (1)(S_3) + \alpha^5 S_2 = 1 + \alpha^10 + \alpha^5 = 1 + z^2+z+1 +z^2+z = 0"/>
+<img src="https://latex.codecogs.com/gif.latex?d_3 = S_4 + (1)(S_3) + \alpha^5 S_2 = 1 + \alpha^{10} + \alpha^5 = 1 + z^2+z+1 +z^2+z = 0"/>
 
 Since <img src="https://latex.codecogs.com/gif.latex?d_3=0"/>, we are free to move onto <img src="https://latex.codecogs.com/gif.latex?\mu=4"/> with the same <img src="https://latex.codecogs.com/gif.latex?\sigma"/>:
 
@@ -515,7 +515,7 @@ Since <img src="https://latex.codecogs.com/gif.latex?d_3=0"/>, we are free to mo
 
 On this row, <img src="https://latex.codecogs.com/gif.latex?l_4 = 2"/> and <img src="https://latex.codecogs.com/gif.latex?4-l_4 = 2"/>. The discrepancy is
 
-<img src="https://latex.codecogs.com/gif.latex?d_4 = S_5 + (1)(S_4) + \alpha^5 S_3 = \alpha^{10} = \alpha^{10} + 1 + 1 = \alpha^{10}"/>
+<img src="https://latex.codecogs.com/gif.latex?d_4 = S_5 + (1)(S_4) + \alpha^5 S_3 = \alpha^{10} + 1 + 1 = \alpha^{10}"/>
 
 Since <img src="https://latex.codecogs.com/gif.latex?d_4"/> is nonzero, we have to again choose a previous row. The options available with <img src="https://latex.codecogs.com/gif.latex?d_{\rho} \neq 0"/> are <img src="https://latex.codecogs.com/gif.latex?\rho=-1"/>, <img src="https://latex.codecogs.com/gif.latex?\rho=0"/>, and <img src="https://latex.codecogs.com/gif.latex?\rho=2"/>. Of these, <img src="https://latex.codecogs.com/gif.latex?\rho=2"/> has the largest <img src="https://latex.codecogs.com/gif.latex?\rho-l_{\rho}"/> of 1. With this <img src="https://latex.codecogs.com/gif.latex?\rho"/>,
 
@@ -528,8 +528,8 @@ Since <img src="https://latex.codecogs.com/gif.latex?d_4"/> is nonzero, we have 
 At row 5, <img src="https://latex.codecogs.com/gif.latex?l_{5}=3"/> and <img src="https://latex.codecogs.com/gif.latex?5-l_5= 5-3 = 2"/> . The discrepancy at this row is
 
 <img src="https://latex.codecogs.com/gif.latex?d_5 = S_6 + (1)(S_5) + (0)(S_4) + \alpha^5 S_3"/><br/>
-<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 + \alpha^10 + \alpha^15"/><br/>
-<img src="https://latex.codecogs.com/gif.latex?= \alpha^10 + \alpha^5 + 1"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 + \alpha^{10} + \alpha^{15}"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= \alpha^{10} + \alpha^5 + 1"/><br/>
 <img src="https://latex.codecogs.com/gif.latex?= z^2+z+1+z^2+z+1= 0"/><br/>
 
 Since <img src="https://latex.codecogs.com/gif.latex?d_5 = 0"/>, <img src="https://latex.codecogs.com/gif.latex?\sigma^{(6)} = \sigma^{(5)} = \alpha^5 x^3 + x + 1"/>. Furthermore, since we've reached row 6, which is the final row, we have found <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/>. So the error locator polynomial is
@@ -540,9 +540,9 @@ Now all that remains is to find the roots of <img src="https://latex.codecogs.co
 <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>. We will do the first few to get a taste of the arithmetic, and then state the other results.
 
 - <img src="https://latex.codecogs.com/gif.latex?\sigma(1) = \alpha^5"/>
-- <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha) = \alpha^6 + \alpha + 1 = z^3+z^2+z+1 = \alpha^12"/>
-- <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^2) = \alpha^11 + \alpha^2 + 1 = z^3+z^2+z+z^2+1 = \alpha^10"/>
-- <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^3) = \alpha^14 + \alpha^2 + 1 = z^3+1+z^3+1 = 0"/>
+- <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha) = \alpha^6 + \alpha + 1 = z^3+z^2+z+1 = \alpha^{12}"/>
+- <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^2) = \alpha^{11} + \alpha^2 + 1 = z^3+z^2+z+z^2+1 = \alpha^{10}"/>
+- <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^3) = \alpha^{14} + \alpha^2 + 1 = z^3+1+z^3+1 = 0"/>
 
 Similarly, <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^{10}) = 0"/>, and <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^{12}) = 0"/>, so <img src="https://latex.codecogs.com/gif.latex?\alpha^3"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{10}"/>, and <img src="https://latex.codecogs.com/gif.latex?\alpha^{12}"/> are the roots
 of the error locator polynomial. To the the error locations, we take the inverses of each of these:
