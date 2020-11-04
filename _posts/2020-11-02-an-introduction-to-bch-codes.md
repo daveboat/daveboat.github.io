@@ -10,7 +10,7 @@ I've been working with error correcting codes, and I had a hard time finding goo
 
 This blog also assumes familiarity with regular linear error correcting codes (like Hamming codes), so I won't go over any general background on error correcting codes.
 
-This blog will be divided into the following sections:
+The blog will be divided into the following sections:
 1. Background on finite fields
 2. Introduction to binary cyclic linear error correcting codes
 3. Introduction to BCH codes
@@ -25,7 +25,7 @@ The mathematics of cyclic error correcting codes is based on finite fields, so i
 
 The addition table is:
 
-| x  | 0 | 1 | 2 | 3 | 4 |
+| +  | 0 | 1 | 2 | 3 | 4 |
 |---|---|---|---|---|---|
 | **0** | 0 | 1 | 2 | 3 | 4 |
 | **1** | 1 | 2 | 3 | 4 | 0 |
@@ -43,7 +43,7 @@ The multiplication table is:
 | **3** | 0 | 3 | 1 | 4 | 2 |
 | **4** | 0 | 4 | 3 | 2 | 1 |
 
-Galois fields must have a number of elements (order) equal to a prime power, and all Galois fields with the same order are isomorphic to each other. To construct a Galois field with non-prime number of elements (i.e. a prime power number of elements), or an **extension field**, we use polynomials instead of integers to represent field elements. To construct <img src="https://latex.codecogs.com/gif.latex?GF(16) = GF(2^4)"/>, we use <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/P"/>. <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]"/> is pronounced "GF(2) adjoin x", and represents the set of all polynomials whose coefficients are in <img src="https://latex.codecogs.com/gif.latex?GF(2)"/>. <img src="https://latex.codecogs.com/gif.latex?P"/>
+Galois fields must have a number of elements (order) equal to a prime power, and all Galois fields with the same order are isomorphic to each other. To construct a Galois field with non-prime number of elements (i.e. a prime power number of elements), or an **extension field**, we use polynomials instead of integers to represent field elements. To construct <img src="https://latex.codecogs.com/gif.latex?GF(16) = GF(2^4)"/>, we use <img src="https://latex.codecogs.com/gif.latex?GF(16) = GF(2)[x]"/> modulo P, written <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/P"/>. <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]"/> is pronounced "GF(2) adjoin x", and represents the set of all polynomials whose coefficients are in <img src="https://latex.codecogs.com/gif.latex?GF(2)"/>, and <img src="https://latex.codecogs.com/gif.latex?P"/>
 is an **irreducible polynomial** of degree 2 over <img src="https://latex.codecogs.com/gif.latex?GF(2)"/>. Irreducible polynomials are polynomials which cannot be factored. For example, in <img src="https://latex.codecogs.com/gif.latex?GF(2)"/>, <img src="https://latex.codecogs.com/gif.latex?x^2+x+1"/> is irreducible, but <img src="https://latex.codecogs.com/gif.latex?x^2+1"/> is not, since <img src="https://latex.codecogs.com/gif.latex?(x+1)(x+1)=x^2+2x+1"/>, but 2=0, so <img src="https://latex.codecogs.com/gif.latex?(x+1)(x+1)=x^2+1"/>. The irreducible polynomials of the first few orders for <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> are:
 
 | Order | Irreducible Polynomial                                                                     |
@@ -54,7 +54,7 @@ is an **irreducible polynomial** of degree 2 over <img src="https://latex.codeco
 | 5     | <img src="https://latex.codecogs.com/gif.latex?x^5+x^2+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^3+x^2+x+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^3+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^4+x^3+x+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^4+x^3+x^2+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^5+x^4+x^2+x+1"/> |
 
 There are, in general, multiple irreducible polynomials of each degree for each base field. In practice, we choose the
-one that has the smallest overall degree (so we prefer to use <img src="https://latex.codecogs.com/gif.latex?x^3+x+1"/> instead of <img src="https://latex.codecogs.com/gif.latex?x^3+x^2+1  "/>, for example). Since all finite fields of an order are isomorphic, constructing an extension field of a particular order with any valid irreducible polynomial creates an isomorphic finite field (the addition and multiplication tables will just have different entries). Let's do an example of constructing an extension field <img src="https://latex.codecogs.com/gif.latex?GF(9)"/> from the base field <img src="https://latex.codecogs.com/gif.latex?GF(3)"/>. We choose <img src="https://latex.codecogs.com/gif.latex?P = x^2 + 1"/>. <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]/(x^2+1)"/> is then the set of all polynomials with coefficients in <img src="https://latex.codecogs.com/gif.latex?GF(3)"/>, modulo <img src="https://latex.codecogs.com/gif.latex?x^2+1"/>, or the set <img src="https://latex.codecogs.com/gif.latex?\{0, 1, 2, x, x+1, x+2, 2x, 2x+1, 2x+2\}"/>, which has 9 elements. Addition and multiplication using this polynomial representation is modulo <img src="https://latex.codecogs.com/gif.latex?x^2+1"/> and modulo 3. Again, for understanding, let's write out the multiplication table (the addition table is easier to calculate) for <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]/(x^2+1)"/> and work out some specific examples.
+one that has the smallest weight (so we prefer to use <img src="https://latex.codecogs.com/gif.latex?x^3+x+1"/> instead of <img src="https://latex.codecogs.com/gif.latex?x^3+x^2+1  "/>, for example). Since all finite fields of an order are isomorphic, constructing an extension field of a particular order with any valid irreducible polynomial creates an isomorphic finite field (the addition and multiplication tables will just have different entries). Let's do an example of constructing an extension field <img src="https://latex.codecogs.com/gif.latex?GF(9)"/> from the base field <img src="https://latex.codecogs.com/gif.latex?GF(3)"/>. We choose <img src="https://latex.codecogs.com/gif.latex?P = x^2 + 1"/>, which is an irreducible polynomial of order 2 in <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]"/>. <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]/(x^2+1)"/> is then the set of all polynomials with coefficients in <img src="https://latex.codecogs.com/gif.latex?GF(3)"/> modulo <img src="https://latex.codecogs.com/gif.latex?x^2+1"/>, or the set <img src="https://latex.codecogs.com/gif.latex?\{0, 1, 2, x, x+1, x+2, 2x, 2x+1, 2x+2\}"/>, which has 9 elements. Addition and multiplication using this polynomial representation is modulo <img src="https://latex.codecogs.com/gif.latex?x^2+1"/> and modulo 3. Again, for understanding, let's write out the multiplication table (the addition table is easier to calculate) for <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]/(x^2+1)"/> and work out some specific examples.
 
 The multiplication table is:
 
@@ -77,7 +77,7 @@ Here are some randomly selected worked out examples so you can get a feel for mo
 <img src="https://latex.codecogs.com/gif.latex?(x+1)(x+2) = x^2+3x+2 = x^2+2 = (x^2+1)+1 = 1"/> <br/>
 <img src="https://latex.codecogs.com/gif.latex?(2x)(2x) = 4x^2 = 4x^2 + 6 = 4(x^2+1)+2 = 2"/> <br/>
 
-To someone who has done regular arithmetic their whole life, polynomial modular arithmetic can seem strange and unwieldy at first, but you may find it more enjoyable once you get the hang of it! 
+To someone who has done regular boring arithmetic their whole life, modular arithmetic can seem strange and unwieldy at first, but you may find it more enjoyable once you get the hang of it! 
 
 A **primitive element**, <img src="https://latex.codecogs.com/gif.latex?\alpha"/> , of a Galois field, is an element whose successive powers generate all elements of the field except 0. In other words, it is a primitive (n-1)th root of unity, where n is the number of the elements in the field. Finding primitive elements is a matter of brute force: try all elements other than 0 and 1. This is easier than it sounds though, since about a third of the elements in a finite field are primitive elements.
 For example, <img src="https://latex.codecogs.com/gif.latex?\alpha=2"/> is a primitive element of <img src="https://latex.codecogs.com/gif.latex?GF(3)"/> and <img src="https://latex.codecogs.com/gif.latex?GF(5)"/>, but not <img src="https://latex.codecogs.com/gif.latex?GF(7)"/>. <img src="https://latex.codecogs.com/gif.latex?\alpha=x+1"/> is a primitive element of <img src="https://latex.codecogs.com/gif.latex?GF(3)[x]/(x^2+1)"/>. To see why, let's do the multiplication, which is made easy by jumping to the correct cell in the multiplication table above.
@@ -91,7 +91,7 @@ For example, <img src="https://latex.codecogs.com/gif.latex?\alpha=2"/> is a pri
 <img src="https://latex.codecogs.com/gif.latex?(x+1)^7 = x+2"/><br/>
 <img src="https://latex.codecogs.com/gif.latex?(x+1)^8 = 1"/><br/>
 
-We've been using the base field <img src="https://latex.codecogs.com/gif.latex?GF(3)"/> in this section to give an example with an order higher than 2. In the remainder of this blog though, we'll use <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> as the base field in examples, since ultimately we're interested in binary codes, for which <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> is always the base field.
+We've been using the base field <img src="https://latex.codecogs.com/gif.latex?GF(3)"/> in this section to give an example with field order higher than 2. In the remainder of this blog though, we'll use <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> as the base field in examples, since ultimately we're interested in binary codes, for which <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> is always the base field.
 
 There is a unique polynomial <img src="https://latex.codecogs.com/gif.latex?m(\alpha)"/> over <img src="https://latex.codecogs.com/gif.latex?GF(q)[x]"/> for each element <img src="https://latex.codecogs.com/gif.latex?\alpha"/> in <img src="https://latex.codecogs.com/gif.latex?GF(q^m)"/> which is the smallest polynomial possible, and such that <img src="https://latex.codecogs.com/gif.latex?m(\alpha) = 0"/>, called a **minimal polynomial**. A **primitive polynomial** is the minimal polynomial of a primitive element. As an example, let's construct the finite field <img src="https://latex.codecogs.com/gif.latex?GF(32)"/>, or <img src="https://latex.codecogs.com/gif.latex?GF(2^5)"/>. We use <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^5+x^2+1)"/>. Some examples of
 elements are: 0, 1, <img src="https://latex.codecogs.com/gif.latex?x"/>, <img src="https://latex.codecogs.com/gif.latex?x+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^2"/>, <img src="https://latex.codecogs.com/gif.latex?x^2+1"/>, <img src="https://latex.codecogs.com/gif.latex?x^2+x"/>, etc. For a primitive element <img src="https://latex.codecogs.com/gif.latex?\alpha"/>, we can generate each element of
@@ -119,11 +119,11 @@ Each <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> has a minimal po
 
 Next, let's discuss linear binary cyclic codes.
 
-- **Linear**: any codeword + another codeword is a valid codeword
+- **Linear**: The weighted sum of any two codewords is also a codeword
 
-- **Binary**: only 1's and 0's in the codewords
+- **Binary**: The codeword symbols are 0 and 1
 
-- **Cyclic**: any cyclic shift of a codeword is another codeword
+- **Cyclic**: Any cyclic shift of a codeword is another codeword
 
 For example, all sets of valid 4-length linear binary cyclic codes are:
 
@@ -132,7 +132,7 @@ For example, all sets of valid 4-length linear binary cyclic codes are:
 - {0000, 0110, 0011, 1100, 0001, 0010, 0100, 1000, 0101, 1010, 1001, 1111, 0111, 1110, 1011, 1101}
 
 Binary linear cyclic codes are represented by <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^n-1)"/>. In this representation, multiplying by <img src="https://latex.codecogs.com/gif.latex?x"/> amounts to
-a left-shift by 1, since <img src="https://latex.codecogs.com/gif.latex?x^n=1"/>. Extension fields of <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> naturally work to represent sequences of binary numbers, since their coefficients are either 0 or 1, so the resulting polynomials can be thought of as binary messages with the most significant bit (MSB) at either the highest degree of <img src="https://latex.codecogs.com/gif.latex?x"/> or lowest degree of <img src="https://latex.codecogs.com/gif.latex?x"/>.
+a cyclic left-shift by 1, since <img src="https://latex.codecogs.com/gif.latex?x^n=1"/>. Extension fields of <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> naturally work to represent sequences of binary numbers, since their coefficients are either 0 or 1, so the resulting polynomials can be thought of as binary messages with the most significant bit (MSB) at either the highest degree of <img src="https://latex.codecogs.com/gif.latex?x"/> or lowest degree of <img src="https://latex.codecogs.com/gif.latex?x"/>.
 
 Furthermore, this means that ANY polynomial in <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^n-1)"/> multiplied by a valid codeword is another valid
 codeword, since valid codewords are some subset of <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^n-1)"/>, and multiplication by an arbitrary polynomial is a linear combination of cyclic shifts of the original codeword. Since all shifted codewords are valid codewords and all linear combinations
