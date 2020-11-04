@@ -316,7 +316,7 @@ for some <img src="https://latex.codecogs.com/gif.latex?a_i(x)"/>, and where <im
 For example, for a (15,7,5) BCH code, if r(x) = 000000100000001 or <img src="https://latex.codecogs.com/gif.latex?r(x) = x^8 + 1"/>, then since t=2, we need to
 compute four syndromes, <img src="https://latex.codecogs.com/gif.latex?S_1"/>, <img src="https://latex.codecogs.com/gif.latex?S_2"/>, <img src="https://latex.codecogs.com/gif.latex?S_3"/>, and <img src="https://latex.codecogs.com/gif.latex?S_4"/>. We can do this by finding <img src="https://latex.codecogs.com/gif.latex?r(x)"/> mod <img src="https://latex.codecogs.com/gif.latex?m_i(x)"/> for <img src="https://latex.codecogs.com/gif.latex?i=1, 2, 3, 4"/>.
 
-- For the first syndrome, <img src="https://latex.codecogs.com/gif.latex?m_1 = x^4+x+1. b_1 = (x^8+1)"/> mod <img src="https://latex.codecogs.com/gif.latex?(x^4+x+1) = x^2"/>. <img src="https://latex.codecogs.com/gif.latex?S_1 = b_1(\alpha) = \alpha^2"/>
+- For the first syndrome, <img src="https://latex.codecogs.com/gif.latex?m_1 = x^4+x+1"/>. <img src="https://latex.codecogs.com/gif.latex?b_1 = (x^8+1)"/> mod <img src="https://latex.codecogs.com/gif.latex?(x^4+x+1) = x^2"/>. <img src="https://latex.codecogs.com/gif.latex?S_1 = b_1(\alpha) = \alpha^2"/>
 	- <img src="https://latex.codecogs.com/gif.latex?S_1 = \alpha^2"/>
 - For the second syndrome, <img src="https://latex.codecogs.com/gif.latex?m_2 = m_1"/>, so <img src="https://latex.codecogs.com/gif.latex?S_2 = b_1(\alpha^2) = (\alpha^2)^2"/>
 	- <img src="https://latex.codecogs.com/gif.latex?S_2 = \alpha^4"/>
@@ -329,17 +329,17 @@ So <img src="https://latex.codecogs.com/gif.latex?(S_1, S_2, S_3, S_4) = (\alpha
 
 Since <img src="https://latex.codecogs.com/gif.latex?S(\alpha^i) = e(\alpha^i)"/>, the syndromes <img src="https://latex.codecogs.com/gif.latex?S_1, S_2,...,S_{2t}"/> can also be written
 
-<img src="https://latex.codecogs.com/gif.latex?S_1 = (\alpha^1)^{j_1} + (\alpha^1)^{j_2} + ... + (\alpha^1)^{j_{\nu}}"/>
-<img src="https://latex.codecogs.com/gif.latex?S_2 = (\alpha^2)^{j_1} + (\alpha^2)^{j_2} + ... + (\alpha^2)^{j_{\nu}}"/>
-<img src="https://latex.codecogs.com/gif.latex?..."/>
-<img src="https://latex.codecogs.com/gif.latex?S_{2t} = (\alpha^{2t})^{j_1} + (\alpha^{2t})^{j_2} + ... + (\alpha^{2t})^{j_{\nu}}"/>
+<img src="https://latex.codecogs.com/gif.latex?S_1 = (\alpha^1)^{j_1} + (\alpha^1)^{j_2} + ... + (\alpha^1)^{j_{\nu}}"/> <br/>
+<img src="https://latex.codecogs.com/gif.latex?S_2 = (\alpha^2)^{j_1} + (\alpha^2)^{j_2} + ... + (\alpha^2)^{j_{\nu}}"/> <br/>
+<img src="https://latex.codecogs.com/gif.latex?..."/> <br/>
+<img src="https://latex.codecogs.com/gif.latex?S_{2t} = (\alpha^{2t})^{j_1} + (\alpha^{2t})^{j_2} + ... + (\alpha^{2t})^{j_{\nu}}"/> <br/>
 
 or alternatively,
 
-<img src="https://latex.codecogs.com/gif.latex?S_1 = (\alpha^{j_1})^1 + (\alpha^{j_2})^1 + ... + (\alpha^{j_{\nu}})^1"/>
-<img src="https://latex.codecogs.com/gif.latex?S_2 = (\alpha^{j_1})^2 + (\alpha^{j_2})^2 + ... + (\alpha^{j_{\nu}})^2"/>
-<img src="https://latex.codecogs.com/gif.latex?..."/>
-<img src="https://latex.codecogs.com/gif.latex?S_{2t} = (\alpha^{j_1})^{2t} + (\alpha^{j_2})^{2t} + ... + (\alpha^{j_{\nu}})^{2t}"/>
+<img src="https://latex.codecogs.com/gif.latex?S_1 = (\alpha^{j_1})^1 + (\alpha^{j_2})^1 + ... + (\alpha^{j_{\nu}})^1"/> <br/>
+<img src="https://latex.codecogs.com/gif.latex?S_2 = (\alpha^{j_1})^2 + (\alpha^{j_2})^2 + ... + (\alpha^{j_{\nu}})^2"/> <br/>
+<img src="https://latex.codecogs.com/gif.latex?..."/> <br/>
+<img src="https://latex.codecogs.com/gif.latex?S_{2t} = (\alpha^{j_1})^{2t} + (\alpha^{j_2})^{2t} + ... + (\alpha^{j_{\nu}})^{2t}"/> <br/>
 
 Solving for the unknowns <img src="https://latex.codecogs.com/gif.latex?\{\alpha^{j_1}, \alpha^{j_2}, ..., \alpha^{j_{\nu}}\}"/> is the goal of any algorithm for
 decoding BCH codes. However, there are in general <img src="https://latex.codecogs.com/gif.latex?2^k"/> possible solutions, so, if the number of errors <img src="https://latex.codecogs.com/gif.latex?\nu"/> is
@@ -352,42 +352,42 @@ The syndrome-error equations can be simplified by defining
 
 after which the syndrome-error equations can be written
 
-<img src="https://latex.codecogs.com/gif.latex?S_1 = \beta_1 + \beta_2 + ... + \beta_{\nu}"/>
-<img src="https://latex.codecogs.com/gif.latex?S_2 = \beta_1^2 + \beta_2^2 + ... + \beta_{\nu}^2"/>
-<img src="https://latex.codecogs.com/gif.latex?..."/>
-<img src="https://latex.codecogs.com/gif.latex?S_{2t} = \beta_1^{2t} + \beta_2^{2t} + ... + \beta_{\nu}^{2t}"/>
+<img src="https://latex.codecogs.com/gif.latex?S_1 = \beta_1 + \beta_2 + ... + \beta_{\nu}"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?S_2 = \beta_1^2 + \beta_2^2 + ... + \beta_{\nu}^2"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?..."/><br/>
+<img src="https://latex.codecogs.com/gif.latex?S_{2t} = \beta_1^{2t} + \beta_2^{2t} + ... + \beta_{\nu}^{2t}"/><br/>
 
 These are power sum symmetric functions. Using the <img src="https://latex.codecogs.com/gif.latex?\beta"/>'s, we can define the error locator polynomial <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> as
 
-<img src="https://latex.codecogs.com/gif.latex?\sigma(x) = (1 + \beta_1 x)(1 + \beta_2 x) ... (1 + \beta_{\nu} x)"/>
-<img src="https://latex.codecogs.com/gif.latex?= \sigma_0 + \sigma_1 x + \sigma_2 x^2 + ... + \sigma_{\nu} x^\nu"/>
+<img src="https://latex.codecogs.com/gif.latex?\sigma(x) = (1 + \beta_1 x)(1 + \beta_2 x) ... (1 + \beta_{\nu} x)"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= \sigma_0 + \sigma_1 x + \sigma_2 x^2 + ... + \sigma_{\nu} x^\nu"/><br/>
 
 The roots of <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> are <img src="https://latex.codecogs.com/gif.latex?\beta_1^{-1}"/>, <img src="https://latex.codecogs.com/gif.latex?\beta_2^{-1}"/>, ..., <img src="https://latex.codecogs.com/gif.latex?\beta_{\nu}^{-1}"/>, which are the inverses of the
 error locations. This leap of defining an additional polynomial might seem arbitrary, but it's for a good
 reason. If <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> is expanded out, the relationship between its coefficients and the <img src="https://latex.codecogs.com/gif.latex?\beta"/>'s are in the form of elementary symmetric polynomials:
 
-<img src="https://latex.codecogs.com/gif.latex?\sigma_0 = 1"/>
-<img src="https://latex.codecogs.com/gif.latex?\sigma_1 = \beta_1 + \beta_2 + ... + \beta_{\nu}"/>
-<img src="https://latex.codecogs.com/gif.latex?\sigma_2 = \beta_1\beta_2 + \beta_2\beta_3 + ... + \beta_{\nu-1}\beta_{\nu}"/>
-<img src="https://latex.codecogs.com/gif.latex?..."/>
-<img src="https://latex.codecogs.com/gif.latex?\sigma_{\nu} = \beta_1\beta_2...\beta_{\nu}"/>
+<img src="https://latex.codecogs.com/gif.latex?\sigma_0 = 1"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?\sigma_1 = \beta_1 + \beta_2 + ... + \beta_{\nu}"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?\sigma_2 = \beta_1\beta_2 + \beta_2\beta_3 + ... + \beta_{\nu-1}\beta_{\nu}"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?..."/><br/>
+<img src="https://latex.codecogs.com/gif.latex?\sigma_{\nu} = \beta_1\beta_2...\beta_{\nu}"/><br/>
 
 From the theory of elementary symmetric polynomials, we know that the syndromes and the coefficients of <img src="https://latex.codecogs.com/gif.latex?\sigma"/> must obey Newton's identities:
 
-<img src="https://latex.codecogs.com/gif.latex?S_1 + \sigma_1 = 0"/>
-<img src="https://latex.codecogs.com/gif.latex?S_2 + \sigma_1 S_1 + 2\sigma_2 = 0"/>
-<img src="https://latex.codecogs.com/gif.latex?S_3 + \sigma_1 S_2 + \sigma_2 S_1 + 3\sigma_3 = 0"/>
-<img src="https://latex.codecogs.com/gif.latex?..."/>
-<img src="https://latex.codecogs.com/gif.latex?S_{\nu} + \sigma_1 S_{\nu-1} + ... + \sigma_{\nu-1} S_1 + \nu \sigma_{\nu} = 0"/>
-<img src="https://latex.codecogs.com/gif.latex?S_{\nu+1} + \sigma_1 S_{\nu} + ... + \sigma_{\nu-1} S_2 + \sigma_{\nu} S_1 = 0"/>
-<img src="https://latex.codecogs.com/gif.latex?..."/>
+<img src="https://latex.codecogs.com/gif.latex?S_1 + \sigma_1 = 0"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?S_2 + \sigma_1 S_1 + 2\sigma_2 = 0"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?S_3 + \sigma_1 S_2 + \sigma_2 S_1 + 3\sigma_3 = 0"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?..."/><br/>
+<img src="https://latex.codecogs.com/gif.latex?S_{\nu} + \sigma_1 S_{\nu-1} + ... + \sigma_{\nu-1} S_1 + \nu \sigma_{\nu} = 0"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?S_{\nu+1} + \sigma_1 S_{\nu} + ... + \sigma_{\nu-1} S_2 + \sigma_{\nu} S_1 = 0"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?..."/><br/>
 
 So defining <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> in this way links the error location values <img src="https://latex.codecogs.com/gif.latex?\beta_i"/> with the syndromes <img src="https://latex.codecogs.com/gif.latex?S_i"/> via Newton's
 identities. Our objective is to determine the error locator polynomial's coefficients, after which, the roots of
 the error locator polynomial can be solved for. There may be many such <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/>'s, but we want the one with
 minimal degree. The process for decoding the error has three steps:
 
-1. Compute the syndromes <img src="https://latex.codecogs.com/gif.latex?S_i"/> by evaluating <img src="https://latex.codecogs.com/gif.latex?r(x)"/> at <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> for <img src="https://latex.codecogs.com/gif.latex?i \in \{1,2,...,2t}"/>
+1. Compute the syndromes <img src="https://latex.codecogs.com/gif.latex?S_i"/> by evaluating <img src="https://latex.codecogs.com/gif.latex?r(x)"/> at <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> for <img src="https://latex.codecogs.com/gif.latex?i \in \{1,2,...,2t\}"/>
 2. Using the syndromes, compute the error locator polynomial <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/>, whose roots are the inverse of the
 locations of the errors
 3. For binary codes, once the error locations are known, those bits just need to be flipped in the code.
@@ -396,7 +396,7 @@ In this section, we'll cover one particular algorithm for decoding BCH codes. Be
 satisfy the first <img src="https://latex.codecogs.com/gif.latex?\mu"/> Newton's identities one by one until <img src="https://latex.codecogs.com/gif.latex?\sigma^{(2t)}"/> is reached, which is minimal degree
 polynomial that satisfies the first 2t Newton's identities. Once <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> is known, all that remains to be done
 is to find its roots by exhaustively substituting all n-1 values of <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> to see which ones result in
-<img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^i) = 0"/>. The error locations are then the inverses of those <img src="https://latex.codecogs.com/gif.latex?\alpha^i's"/>. Remember, in a finite field
+<img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^i) = 0"/>. The error locations are then the inverses of those <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>'s. Remember, in a finite field
 the inverse of <img src="https://latex.codecogs.com/gif.latex?\alpha_i"/> is simply <img src="https://latex.codecogs.com/gif.latex?\alpha^{n-i}"/>, where n+1 is the order of the field.
 
 Let's go into detail about the procedure. First, let
@@ -422,7 +422,7 @@ an <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> (including 1) or 0
 The Berlekamp procedure is best summarized with a table. Regardless of the problem, the default starting table is
 is:
 
-| <img src="https://latex.codecogs.com/gif.latex?\mu"/> | <img src="https://latex.codecogs.com/gif.latex?S_{\mu}"/> | <img src="https://latex.codecogs.com/gif.latex?\sigma^{(\mu)}"/> | <img src="https://latex.codecogs.com/gif.latex?d_{\mu"/>} | <img src="https://latex.codecogs.com/gif.latex?l_{\mu}"/> | <img src="https://latex.codecogs.com/gif.latex?\mu-l_{\mu}"/> |
+| <img src="https://latex.codecogs.com/gif.latex?\mu"/> | <img src="https://latex.codecogs.com/gif.latex?S_{\mu}"/> | <img src="https://latex.codecogs.com/gif.latex?\sigma^{(\mu)}"/> | <img src="https://latex.codecogs.com/gif.latex?d_\mu"/> | <img src="https://latex.codecogs.com/gif.latex?l_{\mu}"/> | <img src="https://latex.codecogs.com/gif.latex?\mu-l_{\mu}"/> |
 |-----|---------|----------------|---------|---------|-------------|
 | -1  | -       | 1              | 1       | 0       | -1          |
 | 0   | -       | 1              | <img src="https://latex.codecogs.com/gif.latex?S_1"/>     | 0       | 0           |
@@ -501,9 +501,9 @@ Since <img src="https://latex.codecogs.com/gif.latex?d_2"/> is not zero, we need
 where <img src="https://latex.codecogs.com/gif.latex?d_{\rho} \neq 0"/>: <img src="https://latex.codecogs.com/gif.latex?\rho=-1"/>, and <img src="https://latex.codecogs.com/gif.latex?\rho=0"/>, of which <img src="https://latex.codecogs.com/gif.latex?\rho=0"/> has the largest <img src="https://latex.codecogs.com/gif.latex?\rho-l_{\rho}"/>. Using this
 row, we are able to compute <img src="https://latex.codecogs.com/gif.latex?\sigma^{(3)}"/>:
 
-<img src="https://latex.codecogs.com/gif.latex?\sigma^{(3)} = \sigma^{(2)} + d_2 d_0^{-1} x^{2-0} \sigma^{(0)}"/>
-<img src="https://latex.codecogs.com/gif.latex?= (x+1) + \alpha^5 x^2 (1)"/>
-<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^2 + x + 1"/>
+<img src="https://latex.codecogs.com/gif.latex?\sigma^{(3)} = \sigma^{(2)} + d_2 d_0^{-1} x^{2-0} \sigma^{(0)}"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= (x+1) + \alpha^5 x^2 (1)"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^2 + x + 1"/><br/>
 
 On this row, <img src="https://latex.codecogs.com/gif.latex?l_3 = 2"/> and <img src="https://latex.codecogs.com/gif.latex?3-l_3 = 3-2 = 1"/>. The discrepancy is
 
@@ -519,18 +519,18 @@ On this row, <img src="https://latex.codecogs.com/gif.latex?l_4 = 2"/> and <img 
 
 Since <img src="https://latex.codecogs.com/gif.latex?d_4"/> is nonzero, we have to again choose a previous row. The options available with <img src="https://latex.codecogs.com/gif.latex?d_{\rho} \neq 0"/> are <img src="https://latex.codecogs.com/gif.latex?\rho=-1"/>, <img src="https://latex.codecogs.com/gif.latex?\rho=0"/>, and <img src="https://latex.codecogs.com/gif.latex?\rho=2"/>. Of these, <img src="https://latex.codecogs.com/gif.latex?\rho=2"/> has the largest <img src="https://latex.codecogs.com/gif.latex?\rho-l_{\rho}"/> of 1. With this <img src="https://latex.codecogs.com/gif.latex?\rho"/>,
 
-<img src="https://latex.codecogs.com/gif.latex?\sigma^{(5)} = \sigma^{(4)} + d_4 d_2^{-1} x^{4-2} \sigma^{(2)}"/>
-<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^2 + x + 1 + \alpha^{10} \alpha^{10} x^2 (x+1)"/>
-<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^2+x+1+\alpha^5 x^3+\alpha^5 x^2"/>
-<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^3 + x + 1"/>
-(where we used the fact that <img src="https://latex.codecogs.com/gif.latex?(\alpha^5)^{-1} = \alpha^{15-5} = \alpha^{10}"/>)
+<img src="https://latex.codecogs.com/gif.latex?\sigma^{(5)} = \sigma^{(4)} + d_4 d_2^{-1} x^{4-2} \sigma^{(2)}"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^2 + x + 1 + \alpha^{10} \alpha^{10} x^2 (x+1)"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^2+x+1+\alpha^5 x^3+\alpha^5 x^2"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^3 + x + 1"/><br/>
+(where we used the fact that <img src="https://latex.codecogs.com/gif.latex?(\alpha^5)^{-1} = \alpha^{15-5} = \alpha^{10}"/>)<br/>
 
 At row 5, <img src="https://latex.codecogs.com/gif.latex?l_{5}=3"/> and <img src="https://latex.codecogs.com/gif.latex?5-l_5= 5-3 = 2"/> . The discrepancy at this row is
 
-<img src="https://latex.codecogs.com/gif.latex?d_5 = S_6 + (1)(S_5) + (0)(S_4) + \alpha^5 S_3"/>
-<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 + \alpha^10 + \alpha^15"/>
-<img src="https://latex.codecogs.com/gif.latex?= \alpha^10 + \alpha^5 + 1"/>
-<img src="https://latex.codecogs.com/gif.latex?= z^2+z+1+z^2+z+1= 0"/>
+<img src="https://latex.codecogs.com/gif.latex?d_5 = S_6 + (1)(S_5) + (0)(S_4) + \alpha^5 S_3"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= \alpha^5 + \alpha^10 + \alpha^15"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= \alpha^10 + \alpha^5 + 1"/><br/>
+<img src="https://latex.codecogs.com/gif.latex?= z^2+z+1+z^2+z+1= 0"/><br/>
 
 Since <img src="https://latex.codecogs.com/gif.latex?d_5 = 0"/>, <img src="https://latex.codecogs.com/gif.latex?\sigma^{(6)} = \sigma^{(5)} = \alpha^5 x^3 + x + 1"/>. Furthermore, since we've reached row 6, which is the final row, we have found <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/>. So the error locator polynomial is
 
