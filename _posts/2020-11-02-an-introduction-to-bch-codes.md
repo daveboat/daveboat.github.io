@@ -190,7 +190,7 @@ Each element of <img src="https://latex.codecogs.com/gif.latex?GF(q)"/> is the r
 The steps to construct a BCH code are:
 1. For a given blocklength <img src="https://latex.codecogs.com/gif.latex?n=q-1"/> with <img src="https://latex.codecogs.com/gif.latex?q=2^m"/>, construct a finite field <img src="https://latex.codecogs.com/gif.latex?GF(q)"/>
 2. Find the minimal polynomials of the elements of <img src="https://latex.codecogs.com/gif.latex?GF(q)"/>
-3. The generator polynomial <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is <img src="https://latex.codecogs.com/gif.latex?LCM\{m_1(x), m_2(x), ..., m_2t(x)\}"/>, where t is the number of error correcting bits
+3. The generator polynomial <img src="https://latex.codecogs.com/gif.latex?g(x)"/> is <img src="https://latex.codecogs.com/gif.latex?LCM\{m_1(x), m_2(x), ..., m_{2t}(x)\}"/>, where t is the number of error correcting bits
 desired. The Hamming distance is d = 2t+1
 4. The message length is k = n - (degree(<img src="https://latex.codecogs.com/gif.latex?g(x)"/>) + 1). This creates an (n, k, d) BCH code.
 
