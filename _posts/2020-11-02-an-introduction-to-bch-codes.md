@@ -305,7 +305,7 @@ where <img src="https://latex.codecogs.com/gif.latex?v(x)"/> is the transmitted 
 
 where <img src="https://latex.codecogs.com/gif.latex?\{j_1, ... j_{\nu}\"/>} is the set of error locations. The sydromes <img src="https://latex.codecogs.com/gif.latex?S_i"/> are just <img src="https://latex.codecogs.com/gif.latex?r(x)"/> evaluated at <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> for
 <img src="https://latex.codecogs.com/gif.latex?i\in \{1,2,...,2t\}"/>. An easier pen-and-paper way to evaluate the syndromes is to use the fact that, for a particular
-<img src="https://latex.codecogs.com/gif.latex?"\alpha^i/>, if <img src="https://latex.codecogs.com/gif.latex?m_i(x)"/>, the minimal polynomial for <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> is known, then
+<img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>, if <img src="https://latex.codecogs.com/gif.latex?m_i(x)"/>, the minimal polynomial for <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> is known, then
 
 <img src="https://latex.codecogs.com/gif.latex?r(x) = m_i(x)a_i(x) + b_i(x)"/>
 
@@ -397,7 +397,7 @@ satisfy the first <img src="https://latex.codecogs.com/gif.latex?\mu"/> Newton's
 polynomial that satisfies the first 2t Newton's identities. Once <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> is known, all that remains to be done
 is to find its roots by exhaustively substituting all n-1 values of <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> to see which ones result in
 <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^i) = 0"/>. The error locations are then the inverses of those <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>'s. Remember, in a finite field
-the inverse of <img src="https://latex.codecogs.com/gif.latex?\alpha_i"/> is simply <img src="https://latex.codecogs.com/gif.latex?\alpha^{n-i}"/>, where n+1 is the order of the field.
+the inverse of <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> is simply <img src="https://latex.codecogs.com/gif.latex?\alpha^{n-i}"/>, where n+1 is the order of the field.
 
 Let's go into detail about the procedure. First, let
 
@@ -410,12 +410,12 @@ must make a correction to <img src="https://latex.codecogs.com/gif.latex?\sigma^
 <img src="https://latex.codecogs.com/gif.latex?d_{\mu} = S_{\mu+1} + \sigma_1^{(\mu)} S_{\mu} + \sigma_2^{(\mu)} S_{\mu-1} + ... + \sigma_{l_{\mu}}^{(\mu)} S_{u+1-l_{\mu}}"/>
 
 if <img src="https://latex.codecogs.com/gif.latex?d_{\mu} = 0"/>, we simply set <img src="https://latex.codecogs.com/gif.latex?\sigma^{(\mu+1)} = \sigma^{(\mu)}"/>. If <img src="https://latex.codecogs.com/gif.latex?d_{\mu}"/> is nonzero, we need to look to a
-previous iteration, indexed at <img src="https://latex.codecogs.com/gif.latex?\rho"/>, where <img src="https://latex.codecogs.com/gif.latex?d_{\rho} \neq 0"/> and <img src="https://latex.codecogs.com/gif.latex?\rho - l_{\rho}"/> is largest. With the <img src="https://latex.codecogs.com/gif.latex?\sigma^{\rho}"/>
+previous iteration, indexed at <img src="https://latex.codecogs.com/gif.latex?\rho"/>, where <img src="https://latex.codecogs.com/gif.latex?d_{\rho} \neq 0"/> and <img src="https://latex.codecogs.com/gif.latex?\rho - l_{\rho}"/> is largest. With the <img src="https://latex.codecogs.com/gif.latex?\sigma^{(\rho)}"/>
 from that iteration, set
 
 <img src="https://latex.codecogs.com/gif.latex?\sigma^{(\mu + 1)} = \sigma^{\mu} + d_{\mu}d_{\rho}^{-1}x^{\mu-\rho}\sigma^{(\rho)}"/>
 
-which gives the minimal polynomial which satisfies the first <img src="https://latex.codecogs.com/gif.latex?\mu+1"/> Newton's identities. This step seems confusing, but hopefully it will make sense when we do an example. Also, so far the whole procedure has been presented abstractly, but the thing to remember is that everything, from the coefficients of <img src="https://latex.codecogs.com/gif.latex?\sigma"/>
+which gives the minimal polynomial which satisfies the first <img src="https://latex.codecogs.com/gif.latex?\mu+1"/> Newton's identities. This step will definitely be confusing for any reasonable person, but hopefully it will make sense when we do an example. Also, so far the whole procedure has been presented abstractly, but the thing to remember is that everything, from the coefficients of <img src="https://latex.codecogs.com/gif.latex?\sigma"/>
 to the discrepancies d to the error locator values <img src="https://latex.codecogs.com/gif.latex?\beta"/>, are all elements of the finite field. So they're all
 an <img src="https://latex.codecogs.com/gif.latex?\alpha^i"/> (including 1) or 0.
 
@@ -440,13 +440,13 @@ Rows are filled in one at a time until row 2t, and we start on row 0. Assuming w
 
 All of this sounds super complicated, but it really isn't: it's just tedious. Let's do an example to see how it
 works in practice. Let's say that we are using a (15,5) triple error correcting code, and the transmitted
-codeword v = 000000000000000 is received as r = 001000000101000, or <img src="https://latex.codecogs.com/gif.latex?r(x)=x^12+x^5+x^3"/>. The first step is to
+codeword v = 000000000000000 is received as r = 001000000101000, or <img src="https://latex.codecogs.com/gif.latex?r(x)=x^{12}+x^5+x^3"/>. The first step is to
 compute the syndromes. There are six syndromes to compute since we are using a triple error correcting code. To follow the computations, the reader may find it useful to refer to the tables for <img src="https://latex.codecogs.com/gif.latex?GF(16)"/> that we compiled in an earlier section.
 
 We need to compute syndromes for <img src="https://latex.codecogs.com/gif.latex?\alpha^1"/> to <img src="https://latex.codecogs.com/gif.latex?\alpha^6"/>. The minimal polynomial for <img src="https://latex.codecogs.com/gif.latex?\alpha^1"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^2"/>, and
 <img src="https://latex.codecogs.com/gif.latex?\alpha^4"/> is <img src="https://latex.codecogs.com/gif.latex?m_1(x)=x^4+x+1"/>. The minimal polynomial for <img src="https://latex.codecogs.com/gif.latex?\alpha^3"/> and <img src="https://latex.codecogs.com/gif.latex?\alpha^6"/> is <img src="https://latex.codecogs.com/gif.latex?m_3(x)=x^4+x^3+x^2+x+1"/>. The
 minimal polynomial for <img src="https://latex.codecogs.com/gif.latex?\alpha^5"/> is <img src="https://latex.codecogs.com/gif.latex?m_5(x)=x^2+x+1"/>. By pen and paper, the easiest way to compute the syndromes is
-to compute the remainder of r(x) after dividing by <img src="https://latex.codecogs.com/gif.latex?m_i(x)"/>, and evaluating the remainder <img src="https://latex.codecogs.com/gif.latex?b_i(x)"/> at <img src="https://latex.codecogs.com/gif.latex?\alpha_i"/>. Let's  do this for each m_i:
+to compute the remainder of <img src="https://latex.codecogs.com/gif.latex?r(x)"/> after dividing by <img src="https://latex.codecogs.com/gif.latex?m_i(x)"/>, and evaluating the remainder <img src="https://latex.codecogs.com/gif.latex?b_i(x)"/> at <img src="https://latex.codecogs.com/gif.latex?\alpha_i"/>. Let's  do this for each <img src="https://latex.codecogs.com/gif.latex?b_i(x)m_i(x)"/>:
 
 - <img src="https://latex.codecogs.com/gif.latex?b_1 = (x^12+x^5+x^3) \text{ mod } (x^4+x+1) = 1"/>
 - <img src="https://latex.codecogs.com/gif.latex?b_3 = (x^12+x^5+x^3) \text{ mod } (x^4+x^3+x^2+x+1) = x^3+x^2+1"/>
@@ -479,7 +479,7 @@ we need to choose a previous row <img src="https://latex.codecogs.com/gif.latex?
 not allowed to choose our current row, there is only one choice: <img src="https://latex.codecogs.com/gif.latex?\rho=-1"/>. Using this row, we have
 
 <img src="https://latex.codecogs.com/gif.latex?\sigma^{(1)} = \sigma^{(0)} + d_{0}d_{-1}^{-1}x^{0-(-1)}\sigma^{(-1)}"/>
-<img src="https://latex.codecogs.com/gif.latex?= 1 + (1)(1)(x^{0-(-1)}(1)"/>
+<img src="https://latex.codecogs.com/gif.latex?= 1 + (1)(1)x^{0-(-1)}(1)"/>
 <img src="https://latex.codecogs.com/gif.latex?= x + 1"/>
 
 This allows us to move to the <img src="https://latex.codecogs.com/gif.latex?\mu=1"/> row. At this row, <img src="https://latex.codecogs.com/gif.latex?l_{1} = 1"/> since the degree of <img src="https://latex.codecogs.com/gif.latex?\sigma^{(1)}"/> is 1, and so
@@ -498,7 +498,7 @@ discrepancy:
 <img src="https://latex.codecogs.com/gif.latex?d_2 = S_3 + (1)(S_2) = \alpha^10 + 1 = z^2+z+1+1 = z^2+z = \alpha^5"/>
 
 Since <img src="https://latex.codecogs.com/gif.latex?d_2"/> is not zero, we need to select the previous column with largest <img src="https://latex.codecogs.com/gif.latex?\rho-l_{\rho}"/>. We have two choices this time 
-where <img src="https://latex.codecogs.com/gif.latex?d_{\rho} \neq 0"/>: <img src="https://latex.codecogs.com/gif.latex?\rho=-1"/>, and <img src="https://latex.codecogs.com/gif.latex?\rho=0"/>, of which <img src="https://latex.codecogs.com/gif.latex?\rho=0"/> has the largest <img src="https://latex.codecogs.com/gif.latex?\rho-l_{\rho}"/>. Using this
+where <img src="https://latex.codecogs.com/gif.latex?d_{\rho} \neq 0"/>: <img src="https://latex.codecogs.com/gif.latex?\rho=-1"/> and <img src="https://latex.codecogs.com/gif.latex?\rho=0"/>, of which <img src="https://latex.codecogs.com/gif.latex?\rho=0"/> has the largest <img src="https://latex.codecogs.com/gif.latex?\rho-l_{\rho}"/>. Using this
 row, we are able to compute <img src="https://latex.codecogs.com/gif.latex?\sigma^{(3)}"/>:
 
 <img src="https://latex.codecogs.com/gif.latex?\sigma^{(3)} = \sigma^{(2)} + d_2 d_0^{-1} x^{2-0} \sigma^{(0)}"/><br/>
@@ -509,7 +509,7 @@ On this row, <img src="https://latex.codecogs.com/gif.latex?l_3 = 2"/> and <img 
 
 <img src="https://latex.codecogs.com/gif.latex?d_3 = S_4 + (1)(S_3) + \alpha^5 S_2 = 1 + \alpha^10 + \alpha^5 = 1 + z^2+z+1 +z^2+z = 0"/>
 
-Since <img src="https://latex.codecogs.com/gif.latex?d_3=0"/, we are free to move onto <img src="https://latex.codecogs.com/gif.latex?\mu=4"/> with the same <img src="https://latex.codecogs.com/gif.latex?\sigma"/>:
+Since <img src="https://latex.codecogs.com/gif.latex?d_3=0"/>, we are free to move onto <img src="https://latex.codecogs.com/gif.latex?\mu=4"/> with the same <img src="https://latex.codecogs.com/gif.latex?\sigma"/>:
 
 <img src="https://latex.codecogs.com/gif.latex?\sigma^{(4)} = \sigma^{(3)} = \alpha^5 x^2 + x + 1"/>
 
@@ -523,7 +523,7 @@ Since <img src="https://latex.codecogs.com/gif.latex?d_4"/> is nonzero, we have 
 <img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^2 + x + 1 + \alpha^{10} \alpha^{10} x^2 (x+1)"/><br/>
 <img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^2+x+1+\alpha^5 x^3+\alpha^5 x^2"/><br/>
 <img src="https://latex.codecogs.com/gif.latex?= \alpha^5 x^3 + x + 1"/><br/>
-(where we used the fact that <img src="https://latex.codecogs.com/gif.latex?(\alpha^5)^{-1} = \alpha^{15-5} = \alpha^{10}"/>)<br/>
+(where we used the fact that <img src="https://latex.codecogs.com/gif.latex?(\alpha^5)^{-1} = \alpha^{15-5} = \alpha^{10}"/> and that <img src="https://latex.codecogs.com/gif.latex?\alpha^{10}\alpha^{10} = \alpha^{15}\alpha^{5} = \alpha^{5}"/>)
 
 At row 5, <img src="https://latex.codecogs.com/gif.latex?l_{5}=3"/> and <img src="https://latex.codecogs.com/gif.latex?5-l_5= 5-3 = 2"/> . The discrepancy at this row is
 
@@ -537,19 +537,18 @@ Since <img src="https://latex.codecogs.com/gif.latex?d_5 = 0"/>, <img src="https
 <img src="https://latex.codecogs.com/gif.latex?\sigma(x) = \alpha^5 x^3 + x + 1"/>
 
 Now all that remains is to find the roots of <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/>. We can do this by exhaustively trying all values of
-<img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>. We will do the first few to get a taste of the math, and then state the other results.
+<img src="https://latex.codecogs.com/gif.latex?\alpha^i"/>. We will do the first few to get a taste of the arithmetic, and then state the other results.
 
 - <img src="https://latex.codecogs.com/gif.latex?\sigma(1) = \alpha^5"/>
 - <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha) = \alpha^6 + \alpha + 1 = z^3+z^2+z+1 = \alpha^12"/>
 - <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^2) = \alpha^11 + \alpha^2 + 1 = z^3+z^2+z+z^2+1 = \alpha^10"/>
 - <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^3) = \alpha^14 + \alpha^2 + 1 = z^3+1+z^3+1 = 0"/>
 
-Similarly, <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^10) = 0"/>, and <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^12) = 0"/>, so <img src="https://latex.codecogs.com/gif.latex?\alpha^3"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^10"/>, and <img src="https://latex.codecogs.com/gif.latex?\alpha^12"/> are the roots
+Similarly, <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^{10}) = 0"/>, and <img src="https://latex.codecogs.com/gif.latex?\sigma(\alpha^{12}) = 0"/>, so <img src="https://latex.codecogs.com/gif.latex?\alpha^3"/>, <img src="https://latex.codecogs.com/gif.latex?\alpha^{10}"/>, and <img src="https://latex.codecogs.com/gif.latex?\alpha^{12}"/> are the roots
 of the error locator polynomial. To the the error locations, we take the inverses of each of these:
 
-- <img src="https://latex.codecogs.com/gif.latex?(\alpha^3)^{-1} = \alpha^{15-3} = \alpha^12"/>
-- <img src="https://latex.codecogs.com/gif.latex?(\alpha^10)^{-1} = \alpha^{15-10} = \alpha^5"/>
-- <img src="https://latex.codecogs.com/gif.latex?(\alpha^12)^{-1} = \alpha^{15-12} = \alpha^3"/>
+- <img src="https://latex.codecogs.com/gif.latex?(\alpha^3)^{-1} = \alpha^{15-3} = \alpha^{12}"/>
+- <img src="https://latex.codecogs.com/gif.latex?(\alpha^{10})^{-1} = \alpha^{15-10} = \alpha^5"/>
+- <img src="https://latex.codecogs.com/gif.latex?(\alpha^{12})^{-1} = \alpha^{15-12} = \alpha^3"/>
 
 So the error locations are at bits 3, 5, and 12, which is where we put the errors in the beginning of the example.
-
