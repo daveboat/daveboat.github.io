@@ -132,13 +132,13 @@ For example, all sets of valid 4-length linear binary cyclic codes are:
 - {0000, 0110, 0011, 1100, 0001, 0010, 0100, 1000, 0101, 1010, 1001, 1111, 0111, 1110, 1011, 1101}
 
 Binary linear cyclic codes are represented by <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^n-1)"/>. In this representation, multiplying by <img src="https://latex.codecogs.com/gif.latex?x"/> amounts to
-a cyclic left-shift by 1, since <img src="https://latex.codecogs.com/gif.latex?x^n=1"/>. Extension fields of <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> naturally work to represent sequences of binary numbers, since their coefficients are either 0 or 1, so the resulting polynomials can be thought of as binary messages with the most significant bit (MSB) at either the highest degree of <img src="https://latex.codecogs.com/gif.latex?x"/> or lowest degree of <img src="https://latex.codecogs.com/gif.latex?x"/>.
+a cyclic left-shift by 1, since <img src="https://latex.codecogs.com/gif.latex?x^n=1"/>. Extension fields of <img src="https://latex.codecogs.com/gif.latex?GF(2)"/> naturally work to represent sequences of binary numbers, since their coefficients are either 0 or 1, so the resulting polynomials can be thought of as binary messages with the most significant bit (MSB) at either the highest degree of <img src="https://latex.codecogs.com/gif.latex?x"/> or lowest degree of <img src="https://latex.codecogs.com/gif.latex?x"/>. Binary modular arithmetic and cyclic shifting is also easier to implement in hardware circuits, with exclusive-OR gates and shift registers.
 
 Furthermore, this means that ANY polynomial in <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^n-1)"/> multiplied by a valid codeword is another valid
 codeword, since valid codewords are some subset of <img src="https://latex.codecogs.com/gif.latex?GF(2)[x]/(x^n-1)"/>, and multiplication by an arbitrary polynomial is a linear combination of cyclic shifts of the original codeword. Since all shifted codewords are valid codewords and all linear combinations
 of codewords are valid codewords, the resulting polynomial must be a valid codeword.
 
-The question then, is **how do we generate codewords**? I.e. how do we choose a generator polynomial which maps all valid
+The question then, is **how do we generate codewords from messages**? I.e. how do we choose a generator polynomial which maps all valid
 messages to all valid codewords? Furthermore, how do we DESIGN the generator polynomial so that we get the block length, message length and error correction capability that we want?
 
 For a cyclic code C(n,k)
@@ -551,4 +551,4 @@ of the error locator polynomial. Note that the Galois field element 1 correspond
 - <img src="https://latex.codecogs.com/gif.latex?(\alpha^{10})^{-1} = \alpha^{15-10} = \alpha^5"/>
 - <img src="https://latex.codecogs.com/gif.latex?(\alpha^{12})^{-1} = \alpha^{15-12} = \alpha^3"/>
 
-So the error locations are at bits 3, 5, and 12, which is where we put the errors in the beginning of the example. Again, note that if one of the roots of <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> had been 1, then the inverse would also be 1, which indicates an error on the 15th, or most significant bit, since bits are indexed from 1 to 15 rather than from 0 to 14.
+So the error locations are at bits 3, 5, and 12, which is where we put the errors in the beginning of the example. Again, note that if one of the roots of <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> had been 1, then the inverse would also be 1, which indicates an error on the 15th, or most significant bit, since bits are indexed from 1 to 15 rather than from 0 to 14. At this stage, if we knew that the message was encoded systematically, we could just read off the 5 most significant bits. If we knew that the message was encoded non-systematically, we would have to divide the codeword by the generator polynomial to recover the message.
