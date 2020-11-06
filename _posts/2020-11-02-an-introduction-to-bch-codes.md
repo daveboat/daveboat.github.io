@@ -372,7 +372,7 @@ reason. If <img src="https://latex.codecogs.com/gif.latex?\sigma(x)"/> is expand
 <img src="https://latex.codecogs.com/gif.latex?..."/><br/>
 <img src="https://latex.codecogs.com/gif.latex?\sigma_{\nu} = \beta_1\beta_2...\beta_{\nu}"/><br/>
 
-From the theory of elementary symmetric polynomials, we know that the syndromes and the coefficients of <img src="https://latex.codecogs.com/gif.latex?\sigma"/> must obey Newton's identities:
+From the theory of elementary symmetric polynomials (but feel free to check that this holds for the first few equations), we know that the syndromes and the coefficients of <img src="https://latex.codecogs.com/gif.latex?\sigma"/> must obey Newton's identities:
 
 <img src="https://latex.codecogs.com/gif.latex?S_1 + \sigma_1 = 0"/><br/>
 <img src="https://latex.codecogs.com/gif.latex?S_2 + \sigma_1 S_1 + 2\sigma_2 = 0"/><br/>
@@ -413,7 +413,7 @@ if <img src="https://latex.codecogs.com/gif.latex?d_{\mu} = 0"/>, we simply set 
 previous iteration, indexed at <img src="https://latex.codecogs.com/gif.latex?\rho"/>, where <img src="https://latex.codecogs.com/gif.latex?d_{\rho} \neq 0"/> and <img src="https://latex.codecogs.com/gif.latex?\rho - l_{\rho}"/> is largest. With the <img src="https://latex.codecogs.com/gif.latex?\sigma^{(\rho)}"/>
 from that iteration, set
 
-<img src="https://latex.codecogs.com/gif.latex?\sigma^{(\mu + 1)} = \sigma^{\mu} + d_{\mu}d_{\rho}^{-1}x^{\mu-\rho}\sigma^{(\rho)}"/>
+<img src="https://latex.codecogs.com/gif.latex?\sigma^{(\mu + 1)} = \sigma^{(\mu)} + d_{\mu}d_{\rho}^{-1}x^{\mu-\rho}\sigma^{(\rho)}"/>
 
 which gives the minimal polynomial which satisfies the first <img src="https://latex.codecogs.com/gif.latex?\mu+1"/> Newton's identities. This step will definitely be confusing for any reasonable person, but hopefully it will make sense when we do an example. Also, so far the whole procedure has been presented abstractly, but the thing to remember is that everything, from the coefficients of <img src="https://latex.codecogs.com/gif.latex?\sigma"/>
 to the discrepancies d to the error locator values <img src="https://latex.codecogs.com/gif.latex?\beta"/>, are all elements of the finite field. So they're all
