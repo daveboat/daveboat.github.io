@@ -2,11 +2,11 @@
 layout: post
 title: My big tech interview experience
 date: 2020-08-14 8:00
-summary: In the past two months (the summer of 2020), I interviewed for engineering positions with both Google and Facebook. Even though I didn't actually get an offer (so take all of this with a grain of salt, ha!), I prepared extensively, so I wanted to share my advice and preparation material. In this blog, I'll describe the interview process, how I prepared, and some thoughts about the experience.
+summary: In the past two months (the summer of 2020), I interviewed for engineering positions with both Google and Facebook. I prepared extensively, so I wanted to share my advice and preparation material. In this blog, I'll describe the interview process, how I prepared, and some thoughts about the experience.
 categories: blogs
 ---
 
-In the past two months (the summer of 2020), I interviewed for engineering positions with both Google and Facebook. Even though I didn't actually get an offer (so take all of this with a grain of salt, ha!), I prepared extensively, so I wanted to share my advice and preparation material. In this blog, I'll describe the interview process, how I prepared, and some thoughts about the experience.
+In the past two months (the summer of 2020), I interviewed for engineering positions with both Google and Facebook. <strike>Even though I didn't actually get an offer (so take all of this with a grain of salt, ha!),</strike>**Update: I did eventually get an offer!** I prepared extensively, so I wanted to share my advice and preparation material. In this blog, I'll describe the interview process, how I prepared, and some thoughts about the experience.
 
 My preparation material can be found in [this github repo](http://github.com/daveboat/interview_prep), and consists of four parts:
 - Coding practice questions
